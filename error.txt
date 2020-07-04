@@ -1,0 +1,75 @@
+Traceback (most recent call last):
+  File "/home/kerloom/covid/venv/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1211, in _execute_context
+    context = constructor(dialect, self, conn, *args)
+  File "/home/kerloom/covid/venv/lib/python3.6/site-packages/sqlalchemy/engine/default.py", line 803, in _init_compiled
+    self.cursor = self.create_cursor()
+  File "/home/kerloom/covid/venv/lib/python3.6/site-packages/sqlalchemy/engine/default.py", line 1159, in create_cursor
+    return self._dbapi_connection.cursor()
+  File "/home/kerloom/covid/venv/lib/python3.6/site-packages/sqlalchemy/pool/base.py", line 1000, in cursor
+    return self.connection.cursor(*args, **kwargs)
+sqlite3.ProgrammingError: SQLite objects created in a thread can only be used in that same thread. The object was created in thread id 140649999169280 and this is thread id 140649777067776.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/kerloom/covid/venv/lib/python3.6/site-packages/flask/app.py", line 2464, in __call__
+    return self.wsgi_app(environ, start_response)
+  File "/home/kerloom/covid/venv/lib/python3.6/site-packages/flask/app.py", line 2450, in wsgi_app
+    response = self.handle_exception(e)
+  File "/home/kerloom/covid/venv/lib/python3.6/site-packages/flask/app.py", line 1867, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/kerloom/covid/venv/lib/python3.6/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/kerloom/covid/venv/lib/python3.6/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/kerloom/covid/venv/lib/python3.6/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/kerloom/covid/venv/lib/python3.6/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/kerloom/covid/venv/lib/python3.6/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/kerloom/covid/venv/lib/python3.6/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/kerloom/covid/venv/lib/python3.6/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/kerloom/covid/api.py", line 73, in index
+    if lugar_query.count() == 0:
+  File "/home/kerloom/covid/venv/lib/python3.6/site-packages/sqlalchemy/orm/query.py", line 3749, in count
+    return self.from_self(col).scalar()
+  File "/home/kerloom/covid/venv/lib/python3.6/site-packages/sqlalchemy/orm/query.py", line 3469, in scalar
+    ret = self.one()
+  File "/home/kerloom/covid/venv/lib/python3.6/site-packages/sqlalchemy/orm/query.py", line 3436, in one
+    ret = self.one_or_none()
+  File "/home/kerloom/covid/venv/lib/python3.6/site-packages/sqlalchemy/orm/query.py", line 3405, in one_or_none
+    ret = list(self)
+  File "/home/kerloom/covid/venv/lib/python3.6/site-packages/sqlalchemy/orm/query.py", line 3481, in __iter__
+    return self._execute_and_instances(context)
+  File "/home/kerloom/covid/venv/lib/python3.6/site-packages/sqlalchemy/orm/query.py", line 3506, in _execute_and_instances
+    result = conn.execute(querycontext.statement, self._params)
+  File "/home/kerloom/covid/venv/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1020, in execute
+    return meth(self, multiparams, params)
+  File "/home/kerloom/covid/venv/lib/python3.6/site-packages/sqlalchemy/sql/elements.py", line 298, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/home/kerloom/covid/venv/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1139, in _execute_clauseelement
+    distilled_params,
+  File "/home/kerloom/covid/venv/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1214, in _execute_context
+    e, util.text_type(statement), parameters, None, None
+  File "/home/kerloom/covid/venv/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1518, in _handle_dbapi_exception
+    sqlalchemy_exception, with_traceback=exc_info[2], from_=e
+  File "/home/kerloom/covid/venv/lib/python3.6/site-packages/sqlalchemy/util/compat.py", line 178, in raise_
+    raise exception
+  File "/home/kerloom/covid/venv/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1211, in _execute_context
+    context = constructor(dialect, self, conn, *args)
+  File "/home/kerloom/covid/venv/lib/python3.6/site-packages/sqlalchemy/engine/default.py", line 803, in _init_compiled
+    self.cursor = self.create_cursor()
+  File "/home/kerloom/covid/venv/lib/python3.6/site-packages/sqlalchemy/engine/default.py", line 1159, in create_cursor
+    return self._dbapi_connection.cursor()
+  File "/home/kerloom/covid/venv/lib/python3.6/site-packages/sqlalchemy/pool/base.py", line 1000, in cursor
+    return self.connection.cursor(*args, **kwargs)
+sqlalchemy.exc.ProgrammingError: (sqlite3.ProgrammingError) SQLite objects created in a thread can only be used in that same thread. The object was created in thread id 140649999169280 and this is thread id 140649777067776.
+[SQL: SELECT count(*) AS count_1
+FROM (SELECT places.id AS places_id, places."query" AS places_query, places.country AS places_country, places.province AS places_province, places.population AS places_population, places.hits AS places_hits
+FROM places
+WHERE places."query" = ?) AS anon_1]
+[parameters: [immutabledict({})]]
+(Background on this error at: http://sqlalche.me/e/f405)
