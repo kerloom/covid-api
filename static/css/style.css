@@ -4,7 +4,9 @@ body {
     font-family: sans-serif;
 }
 .card {
+    padding-top:10px;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    background-color: aliceblue;
     transition: 0.3s;
     border-radius: 5px;
     max-width: 300px;
@@ -44,4 +46,8 @@ body {
 }
 .details {
     text-align: left;
+}
+.safety-index-container {
+    margin:auto;
+    display:inline-flex;
 }
