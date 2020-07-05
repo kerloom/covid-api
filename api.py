@@ -50,9 +50,13 @@ df['New_Cases_Ratio'] = df['New_Cases_Percentage'] / max_new_cases * 100
 df['Death_Ratio'] = df['Death_Percentage'] / max_deaths * 100
 
 df['Indice'] = df['Death_Ratio'] * 0.25 + df['New_Cases_Ratio'] * 0.45 +df['Country_Confirmed_Ratio'] * 0.3
+df['Indice_2'] = df['Death_Ratio'] * 0.4 + df['New_Cases_Ratio'] * 0.6
 max_indice = df['Indice'].quantile(0.95)
 
 df['Safety_Index'] = 10 - df['Indice'] / max_indice * 10
+df['Safety_Index'] = df['Safety_Index'].clip(lower=0)
+df['Safety_Index_2'] = 10 - df['Indice_2'] / max_indice * 10
+df['Safety_Index_2'] = df['Safety_Index_2'].clip(lower=0)
 
 # DB Init
 session = db.session
@@ -102,8 +106,12 @@ def index():
     # per_capita_confirmed = total_confirmed / population
     # per_capita_deaths = total_deaths / population
     # per_capita_recovered = total_recovered / population
-    safety_index = province_df['Safety_Index'].mean()
     
+    if total_recovered > 0:
+        safety_index = province_df['Safety_Index'].mean()
+    else:
+        safety_index = province_df['Safety_Index_2'].mean()
+
     if safety_index >= 8:
         warning_color = 'green'
     elif safety_index < 8 and safety_index >= 6:
