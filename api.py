@@ -5,9 +5,8 @@ from datetime import date, timedelta
 import pandas as pd
 import numpy as np
 from flask import Flask, jsonify, request, render_template
-from sqlalchemy import create_engine, Table
-from sqlalchemy.orm import sessionmaker
-from  db_models import Place
+from settings import app, db
+from db_models import Place
 
 WOLFRAM_APPID = "7GW5RH-PWP987529Q"
 WOLFRAM_BASEURL = "https://api.wolframalpha.com/v1/result"
@@ -56,19 +55,14 @@ max_indice = df['Indice'].quantile(0.95)
 df['Safety_Index'] = 10 - df['Indice'] / max_indice * 10
 
 # DB Init
-engine = create_engine('sqlite:///wolfram_queries.db')
-Session = sessionmaker(bind=engine)
-session = Session()
-place_query = session.query(Place)
-
-app = Flask(__name__)
+session = db.session
 
 #TODO: threading y guardar geo data en db
 @app.route('/api/v1/riesgo')
 def index():
     lugar = request.args.get('lugar')
     
-    lugar_query = place_query.filter(Place.query == lugar)
+    lugar_query = session.query(Place).filter(Place.query == lugar)
     
     if lugar_query.count() == 0:
         raw_data = lookup_data(lugar)

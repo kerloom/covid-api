@@ -1,20 +1,16 @@
-from sqlalchemy import create_engine, Column, Integer, Table, String
-from sqlalchemy.ext.declarative import declarative_base
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from settings import db
 
-engine = create_engine('sqlite:///wolfram_queries.db')
-Base = declarative_base()
-
-class Place(Base):
+class Place(db.Model):
     __tablename__ = 'places'
     
-    id = Column(Integer, primary_key=True)
-    query = Column(String)
-    country = Column(String)
-    province = Column(String)
-    population = Column(Integer)
-    hits = Column(Integer)
-
-Base.metadata.create_all(engine)
+    id = db.Column(db.Integer, primary_key=True)
+    query = db.Column(db.String)
+    country = db.Column(db.String)
+    province = db.Column(db.String)
+    population = db.Column(db.Integer)
+    hits = db.Column(db.Integer)
 
 if __name__ == "__main__":
-    pass
+    db.create_all()
