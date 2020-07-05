@@ -1,5 +1,5 @@
 // const BASE_URL = "http://localhost:5000/";
-const BASE_URL = "https://api.safetravel.world"
+const BASE_URL = "https://api.safetravel.world";
 
 async function getCard(lugar, button) {
     const placeURL = `${BASE_URL}/api/v1/riesgo?lugar=${lugar}`
@@ -8,6 +8,12 @@ async function getCard(lugar, button) {
 
     res = await fetch(placeURL);
     htmlString = await res.text();
+
+    containers = document.getElementsByClassName("safety-index-container");
+    if(containers.length > 0) {
+        containers[0].remove();
+    }
+
     var cardDiv = document.createElement('div');
     cardDiv.className = "safety-index-container"
     cardDiv.innerHTML = htmlString.trim();
@@ -44,6 +50,7 @@ function customizeDOM(){
 
     var newSearchButton = document.createElement('button');
     newSearchButton.innerText = "Safe Search";
+    newSearchButton.className = "button";
     newSearchButton.addEventListener('click', function(e) {
         e.preventDefault();
         getCard(searchBar.value);
@@ -53,3 +60,7 @@ function customizeDOM(){
     searchParent.appendChild(newSearchButton);
 
 }
+
+window.addEventListener("load", function(){
+    customizeDOM();
+});
