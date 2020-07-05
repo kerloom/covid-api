@@ -65,6 +65,7 @@ session = db.session
 @app.route('/api/v1/riesgo')
 def index():
     lugar = request.args.get('lugar')
+    test_query = 'true' == request.args.get('test')
     
     lugar_query = session.query(Place).filter(Place.query == lugar)
     
@@ -138,7 +139,10 @@ def index():
         'warning_color': warning_color
     }
 
-    return render_template('safety.html', **data)
+    if test_query:
+        return render_template('safety_test.html', **data)
+    else:
+        return render_template('safety.html', **data)
 
 
 def lookup_data(lugar):

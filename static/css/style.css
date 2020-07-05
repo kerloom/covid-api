@@ -1,0 +1,47 @@
+body {
+    background-color: aliceblue;
+    color: black;
+    font-family: sans-serif;
+}
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    border-radius: 5px;
+    max-width: 300px;
+    padding-bottom: 15px;
+    display: table-cell;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.4);
+}
+
+.container {
+    padding: 2px 16px;
+    text-align: center;
+}
+.riesgo {
+    font-size: 4em;
+    font-weight: bold;
+    padding: 10px;
+    display: inline-block;
+    border-radius: 10px;
+    border-width: 2px;
+    border-style:solid;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+.riesgo.green {
+    background-color: #b7ffc9;
+    border-color: #00dc3f;
+}
+.riesgo.yellow {
+    background-color: #fff6c9;
+    border-color: #ceb439;
+}
+.riesgo.red {
+    background-color: #ffb9cf;
+    border-color: #ff004c;
+}
+.details {
+    text-align: left;
+}
