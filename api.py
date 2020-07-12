@@ -5,9 +5,8 @@ from datetime import date, timedelta
 import pandas as pd
 import numpy as np
 from flask import Flask, jsonify, request, render_template
-from sqlalchemy import create_engine, Table
-from sqlalchemy.orm import sessionmaker
-from  db_models import Place
+from settings import app, db
+from db_models import Place
 
 WOLFRAM_APPID = "7GW5RH-PWP987529Q"
 WOLFRAM_BASEURL = "https://api.wolframalpha.com/v1/result"
@@ -51,24 +50,24 @@ df['New_Cases_Ratio'] = df['New_Cases_Percentage'] / max_new_cases * 100
 df['Death_Ratio'] = df['Death_Percentage'] / max_deaths * 100
 
 df['Indice'] = df['Death_Ratio'] * 0.25 + df['New_Cases_Ratio'] * 0.45 +df['Country_Confirmed_Ratio'] * 0.3
+df['Indice_2'] = df['Death_Ratio'] * 0.4 + df['New_Cases_Ratio'] * 0.6
 max_indice = df['Indice'].quantile(0.95)
 
 df['Safety_Index'] = 10 - df['Indice'] / max_indice * 10
+df['Safety_Index'] = df['Safety_Index'].clip(lower=0)
+df['Safety_Index_2'] = 10 - df['Indice_2'] / max_indice * 10
+df['Safety_Index_2'] = df['Safety_Index_2'].clip(lower=0)
 
 # DB Init
-engine = create_engine('sqlite:///wolfram_queries.db')
-Session = sessionmaker(bind=engine)
-session = Session()
-place_query = session.query(Place)
-
-app = Flask(__name__)
+session = db.session
 
 #TODO: threading y guardar geo data en db
 @app.route('/api/v1/riesgo')
 def index():
     lugar = request.args.get('lugar')
+    test_query = 'true' == request.args.get('test')
     
-    lugar_query = place_query.filter(Place.query == lugar)
+    lugar_query = session.query(Place).filter(Place.query == lugar)
     
     if lugar_query.count() == 0:
         raw_data = lookup_data(lugar)
@@ -108,8 +107,12 @@ def index():
     # per_capita_confirmed = total_confirmed / population
     # per_capita_deaths = total_deaths / population
     # per_capita_recovered = total_recovered / population
-    safety_index = province_df['Safety_Index'].mean()
     
+    if total_recovered > 0:
+        safety_index = province_df['Safety_Index'].mean()
+    else:
+        safety_index = province_df['Safety_Index_2'].mean()
+
     if safety_index >= 8:
         warning_color = 'green'
     elif safety_index < 8 and safety_index >= 6:
@@ -136,7 +139,10 @@ def index():
         'warning_color': warning_color
     }
 
-    return render_template('safety.html', **data)
+    if test_query:
+        return render_template('safety_test.html', **data)
+    else:
+        return render_template('safety.html', **data)
 
 
 def lookup_data(lugar):
