@@ -1,41 +1,39 @@
-<div class="card-container">
-    <div class="card">
-        <div class="container">
-            <h3><b>Safety Index</b></h3>
-            <span class="riesgo {{ warning_color }}">
-            {{ "{:.1f}".format(safety_index) }}
-            </span>
-        </div>
-    </div>
-    <div class="card">
-        <div class="container">
-            <h3><b>Details for {{ province }}, {{ country }}</b></h3>
-            <div class="details">
-            <ul>
-                <li>
-                    <b>Active: </b>
-                    <span>{{ "{:,.0f}".format(total_active) }}</span>
-                </li>
-                <li>
-                    <b>Confirmed: </b>
-                    <span>{{ "{:,.0f}".format(total_confirmed) }}</span>
-                </li>
-                <li>
-                    <b>Deaths: </b>
-                    <span>{{ "{:,.0f}".format(total_deaths) }}</span>
-                </li>
-                <li>
-                    <b>Recovered: </b>
-                    <span>{{ "{:,.0f}".format(total_recovered) }}</span>
-                </li>
-                <li>
-                    <b>Weekly New Cases: </b>
-                    <span>{{ "{:,.0f}".format(weekly_new_cases) }}</span>
-                </li>
-                
-            </ul>
-            </div>
-        </div>
-    </div>
 
+<div class="card">
+    <div class="container">
+        <h3><b>Safety Index</b></h3>
+        <span class="riesgo {{ warning_color }}">
+        {{ "{:.1f}".format(safety_index) }}
+        </span>
+    </div>
+</div>
+<div class="card">
+    <div class="container">
+        <h3><b>Details for {{ province }}, {{ country }}</b></h3>
+        <div class="details">
+        <ul>
+            <li>
+                <b>Active: </b>
+                <span>{{ "{:,.0f}".format(total_active) }}</span>
+            </li>
+            <li>
+                <b>Confirmed: </b>
+                <span>{{ "{:,.0f}".format(total_confirmed) }}</span>
+            </li>
+            <li>
+                <b>Deaths: </b>
+                <span>{{ "{:,.0f}".format(total_deaths) }}</span>
+            </li>
+            <li>
+                <b>Recovered: </b>
+                <span>{{ "{:,.0f}".format(total_recovered) }}</span>
+            </li>
+            <li>
+                <b>Weekly New Cases: </b>
+                <span>{{ "{:,.0f}".format(weekly_new_cases) }}</span>
+            </li>
+            
+        </ul>
+        </div>
+    </div>
 </div>
