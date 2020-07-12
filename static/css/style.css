@@ -8,13 +8,22 @@ body {
     background-color: aliceblue;
     transition: 0.3s;
     border-radius: 5px;
-    max-width: 300px;
+    width:300px;
+    height: 100%;
     padding-bottom: 15px;
     display: table-cell;
 }
 
 .card:hover {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.4);
+}
+
+.card-container {
+    display: grid;
+    grid-template-columns:repeat(auto-fill, minmax(300px, 300px));
+    width: 100%;
+    clear: both;
+    align-items: center;
 }
 
 .container {
