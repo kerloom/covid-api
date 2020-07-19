@@ -74,14 +74,15 @@ def index():
         if raw_data['success']:
             country = raw_data['country']
             province = raw_data['province']
-            # population = raw_data['population']
+            population = raw_data['population']
         else:
-            return jsonify(raw_data)
+            print(raw_data['message'])
+            return render_template('error.html')
     else:
         place = lugar_query.first()
         country = place.country
         province = place.province
-        # population = place.population
+        population = place.population
         
         place.hits += 1
         session.add(place)
@@ -108,17 +109,20 @@ def index():
     # per_capita_deaths = total_deaths / population
     # per_capita_recovered = total_recovered / population
     
-    if total_recovered > 0:
+    if total_recovered > 0 and country is not 'United Kingdom':
         safety_index = province_df['Safety_Index'].mean()
     else:
         safety_index = province_df['Safety_Index_2'].mean()
 
     if safety_index >= 8:
         warning_color = 'green'
+        risk = 'Low Risk'
     elif safety_index < 8 and safety_index >= 6:
         warning_color = 'yellow'
+        risk = 'Moderate Risk'
     else:
         warning_color = 'red'
+        risk = 'High Risk'
         
     data = {
         'place': lugar,
@@ -136,8 +140,13 @@ def index():
         # 'per_capita_deaths': float(per_capita_deaths*100),
         # 'per_capita_recovered': float(per_capita_recovered*100),
         'safety_index': safety_index,
-        'warning_color': warning_color
+        'warning_color': warning_color,
+        'risk': risk
     }
+    
+    if np.isnan(safety_index):
+        print(f"NAN ERROR: Place: {lugar}, Country: {country}")
+        return render_template('error.html')
 
     if test_query:
         return render_template('safety_test.html', **data)
@@ -153,29 +162,32 @@ def lookup_data(lugar):
         places_array = res.text.split(",")
         country = places_array[-1].lstrip(' ')
         province = places_array[-2].lstrip(' ')
-        # res = requests.get(WOLFRAM_BASEURL, params={'appid': WOLFRAM_APPID, 'i': f"{QUERY_POPULATION}{province},{country}"})
-        # if (res.status_code == 200):
-        #     try:
-        #         population = extract_number(res.text)
-        #     except Exception as e:
-        #         print(e)
-        #         return {'success': False, 'message': "Error2: LUGAR={lugar} | QUERY = f'{QUERY_POPULATION}{province},{country}'"}
+            
+        res = requests.get(WOLFRAM_BASEURL, params={'appid': WOLFRAM_APPID, 'i': f"{QUERY_POPULATION}{province},{country}"})
+        if (res.status_code == 200):
+            try:
+                population = extract_number(res.text)
+            except Exception as e:
+                print(e)
+                return {'success': False, 'message': f"Error2: LUGAR={lugar} | QUERY = {QUERY_POPULATION}{province},{country}"}
+        else:
+            return {'success': False, 'message': f"Error3: LUGAR={lugar} | QUERY = {QUERY_POPULATION}{province},{country}"}
             
         if country == 'United States':
             country = 'US'
         
         # Insert results to db
-        new_place = Place(query=lugar, country=country, province=province, hits='1')  # Agregar population si se descomenta codigo
+        new_place = Place(query=lugar, country=country, province=province, hits='1', population=population)  # Agregar population si se descomenta codigo
         session.add(new_place)
         session.commit()
             
-        return {'success': True, 'country': country, 'province': province,} # Agregar population si se descomenta codigo
+        return {'success': True, 'country': country, 'province': province, 'population': population} # Agregar population si se descomenta codigo
         #return f"{lugar} está en la provincia de {province} en el país {country} con población de provincia de {population}"
         # else:
         #     return {'success': False, 'message': f"Error: LUGAR={lugar} | QUERY = {QUERY_POPULATION}{province},{country}"}
             
     else:
-        return {'success': False, 'message': "Error: LUGAR={lugar} | QUERY = f'{QUERY_PROVINCE}{lugar}'"}
+        return {'success': False, 'message': f"Error: LUGAR={lugar} | QUERY = {QUERY_PROVINCE}{lugar}"}
 
 # HELPER FUNCTIONS
 
