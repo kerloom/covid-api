@@ -16,6 +16,8 @@ QUERY_POPULATION = "What is the population of "
 
 JOHN_HOPKINS_URL = "https://services9.arcgis.com/N9p5hsImWXAccRNI/arcgis/rest/services/Nc2JKvYFoAEOFCG5JSI6/FeatureServer/3/query?f=json&where=Country_Region%3D%27Spain%27&returnGeometry=false&spatialRel=esriSpatialRelIntersects&outFields=*&orderByFields=Confirmed%20desc&outSR=102100&resultOffset=0&resultRecordCount=75&resultType=standard&cacheHint=true"
 
+QUANTILE = 0.98
+
 # https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/06-13-2020.csv
 yesterday = (date.today() - timedelta(days=1)).strftime('%m-%d-%Y')
 week_ago = (date.today() - timedelta(days=7)).strftime('%m-%d-%Y')
@@ -41,9 +43,9 @@ df['Death_Percentage'] = df['Deaths'] / df['Confirmed']
 # Revisar los maximos porque divisiones / 0 da infinito
 df = df.replace([np.inf, -np.inf], np.nan)
 
-max_poblacion_casos = df['Country_Confirmed_Percentage'].quantile(0.95)
-max_new_cases = df['New_Cases_Percentage'].quantile(0.95)
-max_deaths = df['Death_Percentage'].quantile(0.95)
+max_poblacion_casos = df['Country_Confirmed_Percentage'].quantile(QUANTILE)
+max_new_cases = df['New_Cases_Percentage'].quantile(QUANTILE)
+max_deaths = df['Death_Percentage'].quantile(QUANTILE)
 
 df['Country_Confirmed_Ratio'] = df['Country_Confirmed_Percentage'] / max_poblacion_casos * 100
 df['New_Cases_Ratio'] = df['New_Cases_Percentage'] / max_new_cases * 100
@@ -51,11 +53,12 @@ df['Death_Ratio'] = df['Death_Percentage'] / max_deaths * 100
 
 df['Indice'] = df['Death_Ratio'] * 0.25 + df['New_Cases_Ratio'] * 0.45 +df['Country_Confirmed_Ratio'] * 0.3
 df['Indice_2'] = df['Death_Ratio'] * 0.4 + df['New_Cases_Ratio'] * 0.6
-max_indice = df['Indice'].quantile(0.95)
+max_indice = df['Indice'].quantile(QUANTILE)
+max_indice_2 = df['Indice_2'].quantile(QUANTILE)
 
 df['Safety_Index'] = 10 - df['Indice'] / max_indice * 10
 df['Safety_Index'] = df['Safety_Index'].clip(lower=0)
-df['Safety_Index_2'] = 10 - df['Indice_2'] / max_indice * 10
+df['Safety_Index_2'] = 10 - df['Indice_2'] / max_indice_2 * 10
 df['Safety_Index_2'] = df['Safety_Index_2'].clip(lower=0)
 
 # DB Init
@@ -74,14 +77,15 @@ def index():
         if raw_data['success']:
             country = raw_data['country']
             province = raw_data['province']
-            # population = raw_data['population']
+            population = raw_data['population']
         else:
-            return jsonify(raw_data)
+            print(raw_data['message'])
+            return render_template('error.html')
     else:
         place = lugar_query.first()
         country = place.country
         province = place.province
-        # population = place.population
+        population = place.population
         
         place.hits += 1
         session.add(place)
@@ -91,7 +95,8 @@ def index():
     province_df = df[df['Province_State'] == province][df['Country_Region'] == country]
     country_df = df[df['Country_Region'] == country]
     
-    if len(province_df.index) == 0:
+    if len(province_df.index) == 0 or country == 'United Kingdom':
+        print("Using country data instead of province")
         province_df = country_df
         has_province_data = False
     
@@ -115,10 +120,13 @@ def index():
 
     if safety_index >= 8:
         warning_color = 'green'
+        risk = 'Low Risk'
     elif safety_index < 8 and safety_index >= 6:
         warning_color = 'yellow'
+        risk = 'Moderate Risk'
     else:
         warning_color = 'red'
+        risk = 'High Risk'
         
     data = {
         'place': lugar,
@@ -136,8 +144,13 @@ def index():
         # 'per_capita_deaths': float(per_capita_deaths*100),
         # 'per_capita_recovered': float(per_capita_recovered*100),
         'safety_index': safety_index,
-        'warning_color': warning_color
+        'warning_color': warning_color,
+        'risk': risk
     }
+    
+    if np.isnan(safety_index):
+        print(f"NAN ERROR: Place: {lugar}, Country: {country}")
+        return render_template('error.html')
 
     if test_query:
         return render_template('safety_test.html', **data)
@@ -153,29 +166,32 @@ def lookup_data(lugar):
         places_array = res.text.split(",")
         country = places_array[-1].lstrip(' ')
         province = places_array[-2].lstrip(' ')
-        # res = requests.get(WOLFRAM_BASEURL, params={'appid': WOLFRAM_APPID, 'i': f"{QUERY_POPULATION}{province},{country}"})
-        # if (res.status_code == 200):
-        #     try:
-        #         population = extract_number(res.text)
-        #     except Exception as e:
-        #         print(e)
-        #         return {'success': False, 'message': "Error2: LUGAR={lugar} | QUERY = f'{QUERY_POPULATION}{province},{country}'"}
+            
+        res = requests.get(WOLFRAM_BASEURL, params={'appid': WOLFRAM_APPID, 'i': f"{QUERY_POPULATION}{province},{country}"})
+        if (res.status_code == 200):
+            try:
+                population = extract_number(res.text)
+            except Exception as e:
+                print(e)
+                return {'success': False, 'message': f"Error2: LUGAR={lugar} | QUERY = {QUERY_POPULATION}{province},{country}"}
+        else:
+            return {'success': False, 'message': f"Error3: LUGAR={lugar} | QUERY = {QUERY_POPULATION}{province},{country}"}
             
         if country == 'United States':
             country = 'US'
         
         # Insert results to db
-        new_place = Place(query=lugar, country=country, province=province, hits='1')  # Agregar population si se descomenta codigo
+        new_place = Place(query=lugar, country=country, province=province, hits='1', population=population)  # Agregar population si se descomenta codigo
         session.add(new_place)
         session.commit()
             
-        return {'success': True, 'country': country, 'province': province,} # Agregar population si se descomenta codigo
+        return {'success': True, 'country': country, 'province': province, 'population': population} # Agregar population si se descomenta codigo
         #return f"{lugar} está en la provincia de {province} en el país {country} con población de provincia de {population}"
         # else:
         #     return {'success': False, 'message': f"Error: LUGAR={lugar} | QUERY = {QUERY_POPULATION}{province},{country}"}
             
     else:
-        return {'success': False, 'message': "Error: LUGAR={lugar} | QUERY = f'{QUERY_PROVINCE}{lugar}'"}
+        return {'success': False, 'message': f"Error: LUGAR={lugar} | QUERY = {QUERY_PROVINCE}{lugar}"}
 
 # HELPER FUNCTIONS
 
