@@ -16,6 +16,8 @@ QUERY_POPULATION = "What is the population of "
 
 JOHN_HOPKINS_URL = "https://services9.arcgis.com/N9p5hsImWXAccRNI/arcgis/rest/services/Nc2JKvYFoAEOFCG5JSI6/FeatureServer/3/query?f=json&where=Country_Region%3D%27Spain%27&returnGeometry=false&spatialRel=esriSpatialRelIntersects&outFields=*&orderByFields=Confirmed%20desc&outSR=102100&resultOffset=0&resultRecordCount=75&resultType=standard&cacheHint=true"
 
+QUANTILE = 0.98
+
 # https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/06-13-2020.csv
 yesterday = (date.today() - timedelta(days=1)).strftime('%m-%d-%Y')
 week_ago = (date.today() - timedelta(days=7)).strftime('%m-%d-%Y')
@@ -41,9 +43,9 @@ df['Death_Percentage'] = df['Deaths'] / df['Confirmed']
 # Revisar los maximos porque divisiones / 0 da infinito
 df = df.replace([np.inf, -np.inf], np.nan)
 
-max_poblacion_casos = df['Country_Confirmed_Percentage'].quantile(0.95)
-max_new_cases = df['New_Cases_Percentage'].quantile(0.95)
-max_deaths = df['Death_Percentage'].quantile(0.95)
+max_poblacion_casos = df['Country_Confirmed_Percentage'].quantile(QUANTILE)
+max_new_cases = df['New_Cases_Percentage'].quantile(QUANTILE)
+max_deaths = df['Death_Percentage'].quantile(QUANTILE)
 
 df['Country_Confirmed_Ratio'] = df['Country_Confirmed_Percentage'] / max_poblacion_casos * 100
 df['New_Cases_Ratio'] = df['New_Cases_Percentage'] / max_new_cases * 100
@@ -51,11 +53,12 @@ df['Death_Ratio'] = df['Death_Percentage'] / max_deaths * 100
 
 df['Indice'] = df['Death_Ratio'] * 0.25 + df['New_Cases_Ratio'] * 0.45 +df['Country_Confirmed_Ratio'] * 0.3
 df['Indice_2'] = df['Death_Ratio'] * 0.4 + df['New_Cases_Ratio'] * 0.6
-max_indice = df['Indice'].quantile(0.95)
+max_indice = df['Indice'].quantile(QUANTILE)
+max_indice_2 = df['Indice_2'].quantile(QUANTILE)
 
 df['Safety_Index'] = 10 - df['Indice'] / max_indice * 10
 df['Safety_Index'] = df['Safety_Index'].clip(lower=0)
-df['Safety_Index_2'] = 10 - df['Indice_2'] / max_indice * 10
+df['Safety_Index_2'] = 10 - df['Indice_2'] / max_indice_2 * 10
 df['Safety_Index_2'] = df['Safety_Index_2'].clip(lower=0)
 
 # DB Init
@@ -92,7 +95,8 @@ def index():
     province_df = df[df['Province_State'] == province][df['Country_Region'] == country]
     country_df = df[df['Country_Region'] == country]
     
-    if len(province_df.index) == 0:
+    if len(province_df.index) == 0 or country == 'United Kingdom':
+        print("Using country data instead of province")
         province_df = country_df
         has_province_data = False
     
@@ -109,7 +113,7 @@ def index():
     # per_capita_deaths = total_deaths / population
     # per_capita_recovered = total_recovered / population
     
-    if total_recovered > 0 and country is not 'United Kingdom':
+    if total_recovered > 0:
         safety_index = province_df['Safety_Index'].mean()
     else:
         safety_index = province_df['Safety_Index_2'].mean()
