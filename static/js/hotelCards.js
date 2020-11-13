@@ -1,17 +1,33 @@
 // const BASE_URL = "http://localhost:5000/";
 const BASE_URL = "https://api.safetravel.world";
+const FLIGHTS_COUNTRY_CLASS = 'mewtwo-flights-destination-country__name';
+const FLIGHTS_PLACE_CLASS = 'mewtwo-flights-destination-country__pseudo';
+const HOTELS_COUNTRY_CLASS = 'mewtwo-hotels-city-location__name';
+const HOTELS_PLACE_CLASS = 'mewtwo-hotels-city-location__pseudo';
+var TRAVEL_ID;
+var FLIGHTS_FORM_ID;
+var HOTELS_FORM_ID;
+var FLIGHTS_BTN_QUERY_SELECTOR;
+var HOTELS_BTN_QUERY_SELECTOR;
+var FLIGHTS_LOGO_QUERY_SELECTOR;
+var HOTELS_LOGO_QUERY_SELECTOR;
+
+var lang = window.location.pathname.split("/")[1];
+lang = lang.length === 2 ? lang : 'en';
+console.log(lang);
+console.log(TRAVEL_ID);
 
 async function getFlightCard() {
-    var countrySpan = document.getElementsByClassName('mewtwo-flights-destination-country__name')[0]
-    var placeSpan = document.getElementsByClassName('mewtwo-flights-destination-country__pseudo')[0]
+    var countrySpan = document.getElementsByClassName(FLIGHTS_COUNTRY_CLASS)[0]
+    var placeSpan = document.getElementsByClassName(FLIGHTS_PLACE_CLASS)[0]
     var place = placeSpan.innerText.split('/')[0];
     var countryArray = countrySpan.innerText.split(',');
     var country = countryArray[countryArray.length -1];
     var placeQuery = place + ',' + country;
 
-    const placeURL = encodeURI(`${BASE_URL}/api/v1/riesgo?lugar=${placeQuery}`)
+    const placeURL = encodeURI(`${BASE_URL}/api/v1/riesgo?lugar=${placeQuery}&lang=${lang}`);
     
-    padre = document.querySelector("#main > div > div > div > section.elementor-element.elementor-element-6ac97bb.elementor-section-height-min-height.elementor-section-full_width.elementor-section-height-default.elementor-section-items-middle.elementor-section.elementor-top-section > div.elementor-container.elementor-column-gap-default > div > div > div > div > div.elementor-element.elementor-element-4cf0e52.elementor-widget.elementor-widget-text-editor")
+    padre = document.querySelector("#main > div > div > div > section > div.elementor-container.elementor-column-gap-default > div > div > div > div > div.elementor-element.elementor-element-4cf0e52.elementor-widget.elementor-widget-text-editor")
 
     res = await fetch(placeURL);
     htmlString = await res.text();
@@ -26,7 +42,7 @@ async function getFlightCard() {
     cardDiv.innerHTML = htmlString.trim();
     padre.appendChild(cardDiv);
     
-    var flightForm = document.forms['flights-form-5cb3fab1e8378060368033cb45a116b8'];
+    var flightForm = document.forms[FLIGHTS_FORM_ID];
     var flightSearchBtn = document.createElement('button');
     flightSearchBtn.innerText = "Go to Flights";
     flightSearchBtn.className = "button"
@@ -41,25 +57,31 @@ async function getFlightCard() {
 
 async function getHotelCard() {
     var place;
-    var countrySpan = document.getElementsByClassName('mewtwo-hotels-city-location__name')[0]
-    var placeSpan = document.getElementsByClassName('mewtwo-hotels-city-location__pseudo')[0]
+    var countrySpan = document.getElementsByClassName(HOTELS_COUNTRY_CLASS)[0]
+    var placeSpan = document.getElementsByClassName(HOTELS_PLACE_CLASS)[0]
 
     var countryArray = countrySpan.innerText.split(',');
     var country = countryArray[countryArray.length -1];
 
+    let state = null;
     if (countryArray.length === 2) {
         place = placeSpan.innerText.trim();
     } else if (countryArray.length === 3) {
-        place = countryArray[countryArray.length -2];
+        if(!!country.match(/United.*States/)) {
+            place = placeSpan.innerText.trim();
+            state = countryArray[countryArray.length - 2].trim();
+        } else {
+            place = countryArray[countryArray.length - 2];
+        }
     } else {
         console.error("Unexpected Input Error, could not get place")
     }
 
-    var placeQuery = place + ',' + country;
+    var placeQuery = state ? place + ',' + state + ',' + country : place + ',' + country;
 
-    const placeURL = encodeURI(`${BASE_URL}/api/v1/riesgo?lugar=${placeQuery}`)
+    const placeURL = encodeURI(`${BASE_URL}/api/v1/riesgo?lugar=${placeQuery}&lang=${lang}`);
     
-    padre = document.querySelector("#main > div > div > div > section.elementor-element.elementor-element-6ac97bb.elementor-section-height-min-height.elementor-section-full_width.elementor-section-height-default.elementor-section-items-middle.elementor-section.elementor-top-section > div.elementor-container.elementor-column-gap-default > div > div > div > div > div.elementor-element.elementor-element-4cf0e52.elementor-widget.elementor-widget-text-editor")
+    padre = document.querySelector("#main > div > div > div > section > div.elementor-container.elementor-column-gap-default > div > div > div > div > div.elementor-element.elementor-element-4cf0e52.elementor-widget.elementor-widget-text-editor")
 
     res = await fetch(placeURL);
     htmlString = await res.text();
@@ -74,7 +96,7 @@ async function getHotelCard() {
     cardDiv.innerHTML = htmlString.trim();
     padre.appendChild(cardDiv);
     
-    var hotelForm = document.forms['hotels-form-5cb3fab1e8378060368033cb45a116b8'];
+    var hotelForm = document.forms[HOTELS_FORM_ID];
     var hotelSearchBtn = document.createElement('button');
     hotelSearchBtn.innerText = "Go to Hotels";
     hotelSearchBtn.className = "button"
@@ -98,10 +120,18 @@ function setCardCSS() {
 }
 
 function customizeDOM(){
+    TRAVEL_ID = document.body.getAttribute('data-inited_widgets');
+    FLIGHTS_FORM_ID = `flights-form-${TRAVEL_ID}`;
+    HOTELS_FORM_ID = `hotels-form-${TRAVEL_ID}`;
+    FLIGHTS_BTN_QUERY_SELECTOR = `#flights-form-${TRAVEL_ID} > div.mewtwo-flights-submit_button.mewtwo-flights-submit_button--new > button`;
+    HOTELS_BTN_QUERY_SELECTOR = `#hotels-form-${TRAVEL_ID} > div.mewtwo-hotels-submit_button.mewtwo-hotels-submit_button--new > button`;
+    FLIGHTS_LOGO_QUERY_SELECTOR = `#main > div > div > div > section > div.elementor-container.elementor-column-gap-default > div > div > div > div > div.elementor-element.elementor-element-4cf0e52.elementor-widget.elementor-widget-text-editor > div > div > p > div > div.mewtwo-widget.mewtwo-widget--${TRAVEL_ID} > section.mewtwo-flights.mewtwo-flights--virgin.mewtwo-tabs-container > div > section > div`;
+    HOTELS_LOGO_QUERY_SELECTOR = `#main > div > div > div > section > div.elementor-container.elementor-column-gap-default > div > div > div > div > div.elementor-element.elementor-element-4cf0e52.elementor-widget.elementor-widget-text-editor > div > div > p > div > div.mewtwo-widget.mewtwo-widget--${TRAVEL_ID} > section.mewtwo-hotels.mewtwo-hotels--virgin.mewtwo-tabs-container > div > section > div`;
+
     setCardCSS();
 
-    var flightSearchButton = document.querySelector("#flights-form-5cb3fab1e8378060368033cb45a116b8 > div.mewtwo-flights-submit_button.mewtwo-flights-submit_button--new > button");
-    var hotelSearchButton = document.querySelector("#hotels-form-5cb3fab1e8378060368033cb45a116b8 > div.mewtwo-hotels-submit_button.mewtwo-hotels-submit_button--new > button");
+    var flightSearchButton = document.querySelector(FLIGHTS_BTN_QUERY_SELECTOR);
+    var hotelSearchButton = document.querySelector(HOTELS_BTN_QUERY_SELECTOR);
     var flightSearchParent = flightSearchButton.parentElement;
     var hotelSearchParent = hotelSearchButton.parentElement;
 
@@ -112,7 +142,6 @@ function customizeDOM(){
         e.preventDefault();
         getFlightCard();
     });
-    var hotelSearchButton = document.querySelector("#hotels-form-5cb3fab1e8378060368033cb45a116b8 > div.mewtwo-hotels-submit_button.mewtwo-hotels-submit_button--new > button");
 
     var newHotelSearchButton = document.createElement('button');
     newHotelSearchButton.innerText = "Safe Search!";
@@ -128,9 +157,10 @@ function customizeDOM(){
     hotelSearchParent.removeChild(hotelSearchButton);
     hotelSearchParent.appendChild(newHotelSearchButton);
 
-    var travelPayoutsLogoFlights = document.querySelector("#main > div > div > div > section > div.elementor-container.elementor-column-gap-default > div > div > div > div > div.elementor-element.elementor-element-4cf0e52.elementor-widget.elementor-widget-text-editor > div > div > p > div > div.mewtwo-widget.mewtwo-widget--5cb3fab1e8378060368033cb45a116b8 > section.mewtwo-flights.mewtwo-flights--virgin.mewtwo-tabs-container > div > section > div");
+    // var travelPayoutLogos = document.getElementsByClassName('tp_powered_by');
+    var travelPayoutsLogoFlights = document.querySelector(FLIGHTS_LOGO_QUERY_SELECTOR);
     travelPayoutsLogoFlights.remove();
-    var travelPayoutsLogoHotels = document.querySelector("#main > div > div > div > section > div.elementor-container.elementor-column-gap-default > div > div > div > div > div.elementor-element.elementor-element-4cf0e52.elementor-widget.elementor-widget-text-editor > div.elementor-widget-container > div > p > div > div.mewtwo-widget.mewtwo-widget--5cb3fab1e8378060368033cb45a116b8 > section.mewtwo-hotels.mewtwo-hotels--virgin.mewtwo-tabs-container > div > section > div");
+    var travelPayoutsLogoHotels = document.querySelector(HOTELS_LOGO_QUERY_SELECTOR)
     travelPayoutsLogoHotels.remove();
 
 }
