@@ -1,0 +1,44 @@
+
+<div class="card">
+    <div class="container">
+        <h3><b>Índice de Seguridad</b></h3>
+        <span class="riesgo {{ warning_color }}">
+        {{ "{:.1f}".format(safety_index) }}
+        </span>
+        <p>{{risk}}</p>
+    </div>
+</div>
+<div class="card">
+    <div class="container">
+        {% if has_province_data %}
+            <h3><b>Detalles para {{ province }}, {{ country }}</b></h3>
+        {% else %}
+            <h3><b>Detalles para {{ country }}</b></h3>
+        {% endif %}
+        <div class="details">
+        <ul>
+            <li>
+                <b>Activos: </b>
+                <span>{{ "{:,.0f}".format(total_active) }}</span>
+            </li>
+            <li>
+                <b>Confirmados: </b>
+                <span>{{ "{:,.0f}".format(total_confirmed) }}</span>
+            </li>
+            <li>
+                <b>Muertes: </b>
+                <span>{{ "{:,.0f}".format(total_deaths) }}</span>
+            </li>
+            <li>
+                <b>Recuperados: </b>
+                <span>{{ "{:,.0f}".format(total_recovered) }}</span>
+            </li>
+            <li>
+                <b>Casos nuevos semanales: </b>
+                <span>{{ "{:,.0f}".format(weekly_new_cases) }}</span>
+            </li>
+            
+        </ul>
+        </div>
+    </div>
+</div>

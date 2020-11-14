@@ -1,6 +1,7 @@
 #!flask/bin/python
 import requests
 import re
+import unicodedata
 from datetime import date, timedelta
 import pandas as pd
 import numpy as np
@@ -19,11 +20,25 @@ JOHN_HOPKINS_URL = "https://services9.arcgis.com/N9p5hsImWXAccRNI/arcgis/rest/se
 QUANTILE = 0.98
 
 # https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/06-13-2020.csv
-yesterday = (date.today() - timedelta(days=1)).strftime('%m-%d-%Y')
+yesterday = (date.today() - timedelta(days=2)).strftime('%m-%d-%Y')
 week_ago = (date.today() - timedelta(days=7)).strftime('%m-%d-%Y')
 JHU_GITHUB = f"https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/{yesterday}.csv"
 JHU_GITHUB_WEEK = f"https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/{week_ago}.csv"
 POPULATION_CSV = 'world_population.csv'
+PROVINCES_CSV = 'provinces.csv'
+
+RISK = {
+    'en': {
+        'low': 'Low Risk',
+        'med': 'Moderate Risk',
+        'high': 'High Risk'
+    },
+    'es': {
+        'low': 'Riesgo Bajo',
+        'med': 'Riesgo Moderado',
+        'high': 'Riesgo Alto'
+    }
+}
 
 # https://stackoverflow.com/questions/36028759/how-to-open-and-convert-sqlite-database-to-pandas-dataframe
 # https://api.wolframalpha.com/v1/result?appid=7GW5RH-PWP987529Q&i=In+what+province+is+zhengzhou%3F
@@ -31,35 +46,60 @@ POPULATION_CSV = 'world_population.csv'
 df = pd.read_csv(JHU_GITHUB, index_col='Combined_Key')
 df_week = pd.read_csv(JHU_GITHUB_WEEK, index_col='Combined_Key')
 df_population = pd.read_csv(POPULATION_CSV, index_col='Country')
+df_provinces = pd.read_csv(PROVINCES_CSV, index_col='Wolfram')
 
 # Initial DF operations
 df['Country_Population'] = df.Country_Region.map(df_population.Population)
 df['Country_Confirmed'] = df.Country_Region.map(lambda x: df[df['Country_Region'] == x]['Confirmed'].sum())
+df['Country_Active'] = df.Country_Region.map(lambda x: df[df['Country_Region'] == x]['Active'].sum())
 df['Country_Confirmed_Percentage'] = df['Country_Confirmed'] / df['Country_Population']
+df['Country_Active_Percentage'] = df['Country_Active'] / df['Country_Population']
 df['Confirmed_New_Cases'] = df['Confirmed'] - df_week['Confirmed']
-df['New_Cases_Percentage'] = df['Confirmed_New_Cases'] / df['Confirmed']
+df['New_Cases_Percentage'] = df['Confirmed_New_Cases'] / df['Active']
+df['New_Cases_Active_Percentage'] = df['Confirmed_New_Cases'] / df['Confirmed']
 df['Death_Percentage'] = df['Deaths'] / df['Confirmed']
 
 # Revisar los maximos porque divisiones / 0 da infinito
 df = df.replace([np.inf, -np.inf], np.nan)
 
 max_poblacion_casos = df['Country_Confirmed_Percentage'].quantile(QUANTILE)
+max_country_active = df['Country_Active_Percentage'].quantile(QUANTILE)
 max_new_cases = df['New_Cases_Percentage'].quantile(QUANTILE)
+max_new_cases_active = df['New_Cases_Active_Percentage'].quantile(QUANTILE)
 max_deaths = df['Death_Percentage'].quantile(QUANTILE)
 
 df['Country_Confirmed_Ratio'] = df['Country_Confirmed_Percentage'] / max_poblacion_casos * 100
+df['Country_Active_Ratio'] = df['Country_Active_Percentage'] / max_country_active * 100
 df['New_Cases_Ratio'] = df['New_Cases_Percentage'] / max_new_cases * 100
+df['New_Cases_Ratio'] = df['New_Cases_Percentage'].clip(upper=100)
+df['New_Cases_Active_Ratio'] = df['New_Cases_Active_Percentage'] / max_new_cases_active * 100
+df['New_Cases_Active_Ratio'] = df['New_Cases_Active_Percentage'].clip(upper=100)
 df['Death_Ratio'] = df['Death_Percentage'] / max_deaths * 100
+df['Death_Ratio'] = df['Death_Ratio'].clip(upper=100)
 
-df['Indice'] = df['Death_Ratio'] * 0.25 + df['New_Cases_Ratio'] * 0.45 +df['Country_Confirmed_Ratio'] * 0.3
+df['Indice'] = df['Death_Ratio'] * 0.2 + df['New_Cases_Ratio'] * 0.2 + df['Country_Confirmed_Ratio'] * 0.6
 df['Indice_2'] = df['Death_Ratio'] * 0.4 + df['New_Cases_Ratio'] * 0.6
+df['Indice_Active'] = df['Death_Ratio'] * 0.2 + df['New_Cases_Active_Ratio'] * 0.2 + df['Country_Active_Ratio'] * 0.6
+df['Indice_Active_2'] = df['Death_Ratio'] * 0.4 + df['New_Cases_Active_Ratio'] * 0.6
 max_indice = df['Indice'].quantile(QUANTILE)
 max_indice_2 = df['Indice_2'].quantile(QUANTILE)
+max_indice_active = df['Indice_Active'].quantile(QUANTILE)
+max_indice_active_2 = df['Indice_Active_2'].quantile(QUANTILE)
 
-df['Safety_Index'] = 10 - df['Indice'] / max_indice * 10
-df['Safety_Index'] = df['Safety_Index'].clip(lower=0)
-df['Safety_Index_2'] = 10 - df['Indice_2'] / max_indice_2 * 10
-df['Safety_Index_2'] = df['Safety_Index_2'].clip(lower=0)
+df['Confirmed_Index'] = 10 - df['Indice'] / max_indice * 10
+df['Confirmed_Index'] = df['Confirmed_Index'].clip(lower=0)
+df['Confirmed_Index_2'] = 10 - df['Indice_2'] / max_indice_2 * 10
+df['Confirmed_Index_2'] = df['Confirmed_Index_2'].clip(lower=0)
+
+df['Active_Index'] = 10 - df['Indice_Active'] / max_indice_active * 10
+df['Active_Index'] = df['Active_Index'].clip(lower=0)
+df['Active_Index_2'] = 10 - df['Indice_Active_2'] / max_indice_active_2 * 10
+df['Active_Index_2'] = df['Active_Index_2'].clip(lower=0)
+
+df['Safety_Index'] = df['Confirmed_Index'] * 0.4 + df['Active_Index'] * 0.6
+df['Safety_Index_2'] = df['Confirmed_Index_2'] * 0.4 + df['Active_Index_2'] * 0.6
+
+df.to_csv('static/csv_data.csv')
 
 # DB Init
 session = db.session
@@ -67,8 +107,9 @@ session = db.session
 #TODO: threading y guardar geo data en db
 @app.route('/api/v1/riesgo')
 def index():
-    lugar = request.args.get('lugar')
+    lugar = strip_accents(request.args.get('lugar'))
     test_query = 'true' == request.args.get('test')
+    lang = request.args.get('lang', 'en')
     
     lugar_query = session.query(Place).filter(Place.query == lugar)
     
@@ -90,15 +131,22 @@ def index():
         place.hits += 1
         session.add(place)
         session.commit()
+        
+        print("Found in DB!", place, country, province, population)
 
     has_province_data = True
     province_df = df[df['Province_State'] == province][df['Country_Region'] == country]
     country_df = df[df['Country_Region'] == country]
     
     if len(province_df.index) == 0 or country == 'United Kingdom':
-        print("Using country data instead of province")
-        province_df = country_df
-        has_province_data = False
+        print("Not found checking provinces: " + province)
+        if province in df_provinces.index.values:
+            province = df_provinces['Github'][province]
+            province_df = df[df['Province_State'] == province][df['Country_Region'] == country]
+        else:
+            print("Using country data instead of province")
+            province_df = country_df
+            has_province_data = False
     
     max_incidence_rate = df['Incidence_Rate'].max()
     
@@ -120,13 +168,13 @@ def index():
 
     if safety_index >= 8:
         warning_color = 'green'
-        risk = 'Low Risk'
+        risk = RISK[lang]['low']
     elif safety_index < 8 and safety_index >= 6:
         warning_color = 'yellow'
-        risk = 'Moderate Risk'
+        risk = RISK[lang]['med']
     else:
         warning_color = 'red'
-        risk = 'High Risk'
+        risk = RISK[lang]['high']
         
     data = {
         'place': lugar,
@@ -143,9 +191,10 @@ def index():
         # 'per_capita_confirmed': float(per_capita_confirmed*100),
         # 'per_capita_deaths': float(per_capita_deaths*100),
         # 'per_capita_recovered': float(per_capita_recovered*100),
-        'safety_index': safety_index,
+        'safety_index': min(10, max(0, safety_index)),
         'warning_color': warning_color,
-        'risk': risk
+        'risk': risk,
+        'has_province_data': has_province_data
     }
     
     if np.isnan(safety_index):
@@ -155,7 +204,8 @@ def index():
     if test_query:
         return render_template('safety_test.html', **data)
     else:
-        return render_template('safety.html', **data)
+        template_name = f'safety_{lang}.html'
+        return render_template(template_name, **data)
 
 
 def lookup_data(lugar):
@@ -203,6 +253,9 @@ def extract_number(string):
     if has_million:
         number *= 1000000
     return number
+
+def strip_accents(s):
+    return ''.join((c for c in unicodedata.normalize('NFD', s) if unicodedata.category(c) != 'Mn'))
 
 if __name__ == '__main__':
     app.run(debug=True)

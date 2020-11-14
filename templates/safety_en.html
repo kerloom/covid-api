@@ -10,7 +10,11 @@
 </div>
 <div class="card">
     <div class="container">
-        <h3><b>Details for {{ province }}, {{ country }}</b></h3>
+        {% if has_province_data %}
+            <h3><b>Details for {{ province }}, {{ country }}</b></h3>
+        {% else %}
+            <h3><b>Details for {{ country }}</b></h3>
+        {% endif %}
         <div class="details">
         <ul>
             <li>
