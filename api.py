@@ -48,6 +48,8 @@ df_week = pd.read_csv(JHU_GITHUB_WEEK, index_col='Combined_Key')
 df_population = pd.read_csv(POPULATION_CSV, index_col='Country')
 df_provinces = pd.read_csv(PROVINCES_CSV, index_col='Wolfram')
 
+#Bump!
+
 # Initial DF operations
 df['Country_Population'] = df.Country_Region.map(df_population.Population)
 df['Country_Confirmed'] = df.Country_Region.map(lambda x: df[df['Country_Region'] == x]['Confirmed'].sum())
@@ -148,13 +150,13 @@ def index():
             province_df = country_df
             has_province_data = False
     
-    max_incidence_rate = df['Incidence_Rate'].max()
+    max_incidence_rate = df['Incident_Rate'].max()
     
     total_active = province_df['Active'].sum()
     total_confirmed = province_df['Confirmed'].sum()
     total_deaths = province_df['Deaths'].sum()
     total_recovered = province_df['Recovered'].sum()
-    incidence_rate = province_df['Incidence_Rate'].mean()/max_incidence_rate*100
+    incidence_rate = province_df['Incident_Rate'].mean()/max_incidence_rate*100
     new_cases = province_df['Confirmed_New_Cases'].sum()
     # per_capita_active = total_active / population
     # per_capita_confirmed = total_confirmed / population
