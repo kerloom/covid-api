@@ -55,8 +55,8 @@ df['Country_Active'] = df.Country_Region.map(lambda x: df[df['Country_Region'] =
 df['Country_Confirmed_Percentage'] = df['Country_Confirmed'] / df['Country_Population']
 df['Country_Active_Percentage'] = df['Country_Active'] / df['Country_Population']
 df['Confirmed_New_Cases'] = df['Confirmed'] - df_week['Confirmed']
-df['New_Cases_Percentage'] = df['Confirmed_New_Cases'] / df['Active']
-df['New_Cases_Active_Percentage'] = df['Confirmed_New_Cases'] / df['Confirmed']
+df['New_Cases_Percentage'] = df['Confirmed_New_Cases'] / df['Confirmed']
+df['New_Cases_Active_Percentage'] = df['Confirmed_New_Cases'] / df['Active']
 df['Death_Percentage'] = df['Deaths'] / df['Confirmed']
 
 # Revisar los maximos porque divisiones / 0 da infinito
@@ -71,9 +71,9 @@ max_deaths = df['Death_Percentage'].quantile(QUANTILE)
 df['Country_Confirmed_Ratio'] = df['Country_Confirmed_Percentage'] / max_poblacion_casos * 100
 df['Country_Active_Ratio'] = df['Country_Active_Percentage'] / max_country_active * 100
 df['New_Cases_Ratio'] = df['New_Cases_Percentage'] / max_new_cases * 100
-df['New_Cases_Ratio'] = df['New_Cases_Percentage'].clip(upper=100)
+df['New_Cases_Ratio'] = df['New_Cases_Ratio'].clip(upper=100)
 df['New_Cases_Active_Ratio'] = df['New_Cases_Active_Percentage'] / max_new_cases_active * 100
-df['New_Cases_Active_Ratio'] = df['New_Cases_Active_Percentage'].clip(upper=100)
+df['New_Cases_Active_Ratio'] = df['New_Cases_Active_Ratio'].clip(upper=100)
 df['Death_Ratio'] = df['Death_Percentage'] / max_deaths * 100
 df['Death_Ratio'] = df['Death_Ratio'].clip(upper=100)
 
@@ -148,28 +148,28 @@ def index():
             province_df = country_df
             has_province_data = False
     
-    max_incidence_rate = df['Incidence_Rate'].max()
+    max_incidence_rate = df['Incident_Rate'].max()
     
     total_active = province_df['Active'].sum()
     total_confirmed = province_df['Confirmed'].sum()
     total_deaths = province_df['Deaths'].sum()
     total_recovered = province_df['Recovered'].sum()
-    incidence_rate = province_df['Incidence_Rate'].mean()/max_incidence_rate*100
+    incidence_rate = province_df['Incident_Rate'].mean()/max_incidence_rate*100
     new_cases = province_df['Confirmed_New_Cases'].sum()
     # per_capita_active = total_active / population
     # per_capita_confirmed = total_confirmed / population
     # per_capita_deaths = total_deaths / population
     # per_capita_recovered = total_recovered / population
     
-    if total_recovered > 0:
+    if True: #total_recovered > 0:
         safety_index = province_df['Safety_Index'].mean()
     else:
         safety_index = province_df['Safety_Index_2'].mean()
 
-    if safety_index >= 8:
+    if safety_index >= 7.5:
         warning_color = 'green'
         risk = RISK[lang]['low']
-    elif safety_index < 8 and safety_index >= 6:
+    elif safety_index < 7.5 and safety_index >= 6:
         warning_color = 'yellow'
         risk = RISK[lang]['med']
     else:

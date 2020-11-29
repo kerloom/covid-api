@@ -3,3 +3,4 @@ __pycache__/
 *.__pyc
 .vscode
 wolfram_queries.db
+static/csv_data.csv
