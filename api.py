@@ -48,8 +48,6 @@ df_week = pd.read_csv(JHU_GITHUB_WEEK, index_col='Combined_Key')
 df_population = pd.read_csv(POPULATION_CSV, index_col='Country')
 df_provinces = pd.read_csv(PROVINCES_CSV, index_col='Wolfram')
 
-#Bump!
-
 # Initial DF operations
 df['Country_Population'] = df.Country_Region.map(df_population.Population)
 df['Country_Confirmed'] = df.Country_Region.map(lambda x: df[df['Country_Region'] == x]['Confirmed'].sum())
@@ -57,8 +55,8 @@ df['Country_Active'] = df.Country_Region.map(lambda x: df[df['Country_Region'] =
 df['Country_Confirmed_Percentage'] = df['Country_Confirmed'] / df['Country_Population']
 df['Country_Active_Percentage'] = df['Country_Active'] / df['Country_Population']
 df['Confirmed_New_Cases'] = df['Confirmed'] - df_week['Confirmed']
-df['New_Cases_Percentage'] = df['Confirmed_New_Cases'] / df['Active']
-df['New_Cases_Active_Percentage'] = df['Confirmed_New_Cases'] / df['Confirmed']
+df['New_Cases_Percentage'] = df['Confirmed_New_Cases'] / df['Confirmed']
+df['New_Cases_Active_Percentage'] = df['Confirmed_New_Cases'] / df['Active']
 df['Death_Percentage'] = df['Deaths'] / df['Confirmed']
 
 # Revisar los maximos porque divisiones / 0 da infinito
@@ -73,9 +71,9 @@ max_deaths = df['Death_Percentage'].quantile(QUANTILE)
 df['Country_Confirmed_Ratio'] = df['Country_Confirmed_Percentage'] / max_poblacion_casos * 100
 df['Country_Active_Ratio'] = df['Country_Active_Percentage'] / max_country_active * 100
 df['New_Cases_Ratio'] = df['New_Cases_Percentage'] / max_new_cases * 100
-df['New_Cases_Ratio'] = df['New_Cases_Percentage'].clip(upper=100)
+df['New_Cases_Ratio'] = df['New_Cases_Ratio'].clip(upper=100)
 df['New_Cases_Active_Ratio'] = df['New_Cases_Active_Percentage'] / max_new_cases_active * 100
-df['New_Cases_Active_Ratio'] = df['New_Cases_Active_Percentage'].clip(upper=100)
+df['New_Cases_Active_Ratio'] = df['New_Cases_Active_Ratio'].clip(upper=100)
 df['Death_Ratio'] = df['Death_Percentage'] / max_deaths * 100
 df['Death_Ratio'] = df['Death_Ratio'].clip(upper=100)
 
@@ -163,15 +161,15 @@ def index():
     # per_capita_deaths = total_deaths / population
     # per_capita_recovered = total_recovered / population
     
-    if total_recovered > 0:
+    if True: #total_recovered > 0:
         safety_index = province_df['Safety_Index'].mean()
     else:
         safety_index = province_df['Safety_Index_2'].mean()
 
-    if safety_index >= 8:
+    if safety_index >= 7.5:
         warning_color = 'green'
         risk = RISK[lang]['low']
-    elif safety_index < 8 and safety_index >= 6:
+    elif safety_index < 7.5 and safety_index >= 6:
         warning_color = 'yellow'
         risk = RISK[lang]['med']
     else:
