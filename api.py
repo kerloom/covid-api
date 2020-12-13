@@ -24,8 +24,10 @@ yesterday = (date.today() - timedelta(days=2)).strftime('%m-%d-%Y')
 week_ago = (date.today() - timedelta(days=7)).strftime('%m-%d-%Y')
 JHU_GITHUB = f"https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/{yesterday}.csv"
 JHU_GITHUB_WEEK = f"https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/{week_ago}.csv"
+GCP_DATA = "https://storage.googleapis.com/covid19-open-data/v2/latest/main.csv"
 POPULATION_CSV = 'world_population.csv'
 PROVINCES_CSV = 'provinces.csv'
+JHU_TO_GCP = 'jhu_to_gcp.csv'
 
 RISK = {
     'en': {
@@ -47,6 +49,31 @@ df = pd.read_csv(JHU_GITHUB, index_col='Combined_Key')
 df_week = pd.read_csv(JHU_GITHUB_WEEK, index_col='Combined_Key')
 df_population = pd.read_csv(POPULATION_CSV, index_col='Country')
 df_provinces = pd.read_csv(PROVINCES_CSV, index_col='Wolfram')
+df_dict = pd.read_csv(JHU_TO_GCP, index_col='JHU')
+
+# ------------- Nuevo Add GCP Columns to JHU Data ----------------------
+df_gcp = pd.read_csv(GCP_DATA)
+df_gcp['st_key'] = df_gcp['country_name'] + '_' + df_gcp['subregion1_name']
+df['st_key'] = df['Country_Region'] + '_' + df['Province_State']
+df['Area'] = np.nan
+df['Population'] = np.nan
+
+for key in df['st_key'].unique():
+    try:
+        gcp_key = df_dict.loc[key]['GCP']
+        row_idx = df[df['st_key'] == key]['Area'].index
+        raw_data = df_gcp[(df_gcp['st_key'] == gcp_key) & (df_gcp['subregion2_name'].isnull())][['area','population']]
+        if raw_data.shape == (1,2):
+            data = raw_data.values
+        else:
+            print("Different Data Shape", gcp_key)
+            print(raw_data)
+            data = [np.nan, np.nan]
+        df.loc[row_idx, ['Area', 'Population']] = data
+    except KeyError as e:
+        print(e)
+        print("No key:", key)
+# ------------------------------------------
 
 # Initial DF operations
 df['Country_Population'] = df.Country_Region.map(df_population.Population)
@@ -77,9 +104,9 @@ df['New_Cases_Active_Ratio'] = df['New_Cases_Active_Ratio'].clip(upper=100)
 df['Death_Ratio'] = df['Death_Percentage'] / max_deaths * 100
 df['Death_Ratio'] = df['Death_Ratio'].clip(upper=100)
 
-df['Indice'] = df['Death_Ratio'] * 0.2 + df['New_Cases_Ratio'] * 0.2 + df['Country_Confirmed_Ratio'] * 0.6
+df['Indice'] = df['Death_Ratio'] * 0.2 + df['New_Cases_Ratio'] * 0.6 + df['Country_Confirmed_Ratio'] * 0.2
 df['Indice_2'] = df['Death_Ratio'] * 0.4 + df['New_Cases_Ratio'] * 0.6
-df['Indice_Active'] = df['Death_Ratio'] * 0.2 + df['New_Cases_Active_Ratio'] * 0.2 + df['Country_Active_Ratio'] * 0.6
+df['Indice_Active'] = df['Death_Ratio'] * 0.2 + df['New_Cases_Active_Ratio'] * 0.6 + df['Country_Active_Ratio'] * 0.2
 df['Indice_Active_2'] = df['Death_Ratio'] * 0.4 + df['New_Cases_Active_Ratio'] * 0.6
 max_indice = df['Indice'].quantile(QUANTILE)
 max_indice_2 = df['Indice_2'].quantile(QUANTILE)
