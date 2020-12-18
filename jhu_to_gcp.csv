@@ -27,7 +27,7 @@ Belgium_Brussels,Belgium_Brussels
 Belgium_East Flanders,Belgium_East Flanders
 Belgium_Flemish Brabant,Belgium_Flemish Brabant
 Belgium_Hainaut,Belgium_Hainaut
-Belgium_Liege,Belgium_LiÃ¨ge
+Belgium_Liege,Belgium_Liège
 Belgium_Limburg,Belgium_Limburg
 Belgium_Luxembourg,Belgium_Luxembourg
 Belgium_Namur,Belgium_Namur
@@ -42,29 +42,29 @@ Bosnia and Herzegovina_,Bosnia and Herzegovina_
 Botswana_,Botswana_
 Brazil_Acre,Brazil_Acre
 Brazil_Alagoas,Brazil_Alagoas
-Brazil_Amapa,Brazil_AmapÃ¡
+Brazil_Amapa,Brazil_Amapá
 Brazil_Amazonas,Brazil_Amazonas
 Brazil_Bahia,Brazil_Bahia
-Brazil_Ceara,Brazil_CearÃ¡
+Brazil_Ceara,Brazil_Ceará
 Brazil_Distrito Federal,Brazil_Distrito Federal
 Brazil_Espirito Santo,Brazil_Espirito Santo
-Brazil_Goias,Brazil_GoiÃ¡s
-Brazil_Maranhao,Brazil_MaranhÃ£o
+Brazil_Goias,Brazil_Goiás
+Brazil_Maranhao,Brazil_Maranhão
 Brazil_Mato Grosso,Brazil_Mato Grosso
 Brazil_Mato Grosso do Sul,Brazil_Mato Grosso do Sul
 Brazil_Minas Gerais,Brazil_Minas Gerais
-Brazil_Para,Brazil_ParÃ¡
-Brazil_Paraiba,Brazil_ParaÃ­ba
-Brazil_Parana,Brazil_ParanÃ¡
+Brazil_Para,Brazil_Pará
+Brazil_Paraiba,Brazil_Paraíba
+Brazil_Parana,Brazil_Paraná
 Brazil_Pernambuco,Brazil_Pernambuco
-Brazil_Piaui,Brazil_PiauÃ­
+Brazil_Piaui,Brazil_Piauí
 Brazil_Rio Grande do Norte,Brazil_Rio Grande do Norte
 Brazil_Rio Grande do Sul,Brazil_Rio Grande do Sul
 Brazil_Rio de Janeiro,Brazil_Rio de Janeiro
-Brazil_Rondonia,Brazil_RondÃ´nia
+Brazil_Rondonia,Brazil_Rondônia
 Brazil_Roraima,Brazil_Roraima
 Brazil_Santa Catarina,Brazil_Santa Catarina
-Brazil_Sao Paulo,Brazil_SÃ£o Paulo
+Brazil_Sao Paulo,Brazil_São Paulo
 Brazil_Sergipe,Brazil_Sergipe
 Brazil_Tocantins,Brazil_Tocantins
 Brunei_,Brunei_
@@ -94,22 +94,22 @@ Canada_Yukon,Canada_Yukon
 Central African Republic_,Central African Republic_
 Chad_,Chad_
 Chile_Antofagasta,Chile_Antofagasta
-Chile_Araucania,Chile_AraucanÃ­a
+Chile_Araucania,Chile_Araucanía
 Chile_Arica y Parinacota,Chile_Arica y Parinacota
 Chile_Atacama,Chile_Atacama
-Chile_Aysen,Chile_AysÃ©n
-Chile_Biobio,Chile_BiobÃ­o
+Chile_Aysen,Chile_Aysén
+Chile_Biobio,Chile_Biobío
 Chile_Coquimbo,Chile_Coquimbo
 Chile_Los Lagos,Chile_Los Lagos
-Chile_Los Rios,Chile_Los RÃ­os
+Chile_Los Rios,Chile_Los Ríos
 Chile_Magallanes,Chile_Magallanes
 Chile_Maule,Chile_Maule
 Chile_Metropolitana,Chile_Santiago Metropolitan Region
-Chile_Nuble,Chile_Ã‘uble
+Chile_Nuble,Chile_Ñuble
 Chile_OHiggins,Chile_O'Higgins
-Chile_Tarapaca,Chile_TarapacÃ¡
+Chile_Tarapaca,Chile_Tarapacá
 Chile_Unknown,
-Chile_Valparaiso,Chile_ValparaÃ­so
+Chile_Valparaiso,Chile_Valparaíso
 China_Anhui,China_Anhui
 China_Beijing,China_Beijing
 China_Chongqing,China_Chongqing
@@ -146,36 +146,36 @@ China_Zhejiang,China_Zhejiang
 Colombia_Amazonas,Colombia_Amazonas
 Colombia_Antioquia,Colombia_Antioquia
 Colombia_Arauca,Colombia_Arauca
-Colombia_Atlantico,Colombia_AtlÃ¡ntico
-Colombia_Bolivar,Colombia_BogotÃ¡ D.C.
-Colombia_Boyaca,Colombia_BolÃ­var
-Colombia_Caldas,Colombia_BoyacÃ¡
-Colombia_Capital District,Colombia_CÃ³rdoba
-Colombia_Caqueta,Colombia_Caldas
-Colombia_Casanare,Colombia_CaquetÃ¡
-Colombia_Cauca,Colombia_Casanare
+Colombia_Atlantico,Colombia_Atlántico
+Colombia_Bolivar,Colombia_Bolívar
+Colombia_Boyaca,Colombia_Boyacá
+Colombia_Caldas,Colombia_Caldas
+Colombia_Capital District,Colombia_Bogotá D.C.
+Colombia_Caqueta,Colombia_Caquetá
+Colombia_Casanare,Colombia_Casanare
+Colombia_Cauca,Colombia_Cauca
 Colombia_Cesar,Colombia_Cauca
 Colombia_Choco,Colombia_Cesar
-Colombia_Cordoba,Colombia_ChocÃ³
+Colombia_Cordoba,Colombia_Córdoba
 Colombia_Cundinamarca,Colombia_Cundinamarca
-Colombia_Guainia,Colombia_GuainÃ­a
+Colombia_Guainia,Colombia_Guainía
 Colombia_Guaviare,Colombia_Guaviare
 Colombia_Huila,Colombia_Huila
 Colombia_La Guajira,Colombia_La Guajira
 Colombia_Magdalena,Colombia_Magdalena
 Colombia_Meta,Colombia_Meta
-Colombia_Narino,Colombia_NariÃ±o
+Colombia_Narino,Colombia_Nariño
 Colombia_Norte de Santander,Colombia_Norte de Santander
 Colombia_Putumayo,Colombia_Putumayo
-Colombia_Quindio,Colombia_QuindÃ­o
+Colombia_Quindio,Colombia_Quindío
 Colombia_Risaralda,Colombia_Risaralda
-Colombia_San Andres y Providencia,Colombia_San AndrÃ©s and Providencia
+Colombia_San Andres y Providencia,Colombia_San Andrés and Providencia
 Colombia_Santander,Colombia_Santander
 Colombia_Sucre,Colombia_Sucre
 Colombia_Tolima,Colombia_Tolima
 Colombia_Unknown,
 Colombia_Valle del Cauca,Colombia_Valle Del Cauca
-Colombia_Vaupes,Colombia_VaupÃ©s
+Colombia_Vaupes,Colombia_Vaupés
 Colombia_Vichada,Colombia_Vichada
 Comoros_,Comoros
 Congo (Brazzaville)_,Democratic Republic of the Congo_
@@ -209,8 +209,8 @@ France_Guadeloupe,France_Guadeloupe
 France_Martinique,France_Martinique
 France_Mayotte,France_Mayotte
 France_New Caledonia,
-France_Reunion,France_La RÃ©union
-France_Saint Barthelemy,France_Saint BarthÃ©lemy
+France_Reunion,France_La Réunion
+France_Saint Barthelemy,France_Saint Barthélemy
 France_Saint Pierre and Miquelon,France_Saint Pierre and Miquelon
 France_St Martin,France_Saint Martin
 France_,France_
@@ -220,7 +220,7 @@ Georgia_,Georgia_
 Germany_Baden-Wurttemberg,Germany_Brandenburg
 Germany_Bayern,Germany_Bavaria
 Germany_Berlin,Germany_Berlin
-Germany_Brandenburg,Germany_Baden-WÃ¼rttemberg
+Germany_Brandenburg,Germany_Baden-Württemberg
 Germany_Bremen,Germany_Bremen
 Germany_Hamburg,Germany_Hamburg
 Germany_Hessen,Germany_Hesse
@@ -322,14 +322,14 @@ Japan_Gifu,Japan_Gifu
 Japan_Gunma,Japan_Gunma
 Japan_Hiroshima,Japan_Hiroshima
 Japan_Hokkaido,Japan_Hokkaido
-Japan_Hyogo,Japan_HyÅgo
+Japan_Hyogo,Japan_Hyōgo
 Japan_Ibaraki,Japan_Ibaraki
 Japan_Ishikawa,Japan_Ishikawa
 Japan_Iwate,Japan_Iwate
 Japan_Kagawa,Japan_Kagawa
 Japan_Kagoshima,Japan_Kagoshima
 Japan_Kanagawa,Japan_Kanagawa
-Japan_Kochi,Japan_KÅchi
+Japan_Kochi,Japan_Kōchi
 Japan_Kumamoto,Japan_Kumamoto
 Japan_Kyoto,Japan_Kyoto
 Japan_Mie,Japan_Mie
@@ -339,7 +339,7 @@ Japan_Nagano,Japan_Nagano
 Japan_Nagasaki,Japan_Nagasaki
 Japan_Nara,Japan_Nara
 Japan_Niigata,Japan_Niigata
-Japan_Oita,Japan_ÅŒita
+Japan_Oita,Japan_Ōita
 Japan_Okayama,Japan_Okayama
 Japan_Okinawa,Japan_Okinawa
 Japan_Osaka,Japan_Osaka
@@ -400,15 +400,15 @@ Mexico_Guerrero,Mexico_Guanajuato
 Mexico_Hidalgo,Mexico_Hidalgo
 Mexico_Jalisco,Mexico_Jalisco
 Mexico_Mexico,Mexico_State of Mexico
-Mexico_Michoacan,Mexico_MichoacÃ¡n
+Mexico_Michoacan,Mexico_Michoacán
 Mexico_Morelos,Mexico_Morelos
 Mexico_Nayarit,Mexico_Nayarit
-Mexico_Nuevo Leon,Mexico_Nuevo LeÃ³n
+Mexico_Nuevo Leon,Mexico_Nuevo León
 Mexico_Oaxaca,Mexico_Oaxaca
 Mexico_Puebla,Mexico_Puebla
-Mexico_Queretaro,Mexico_QuerÃ©taro
+Mexico_Queretaro,Mexico_Querétaro
 Mexico_Quintana Roo,Mexico_Quintana Roo
-Mexico_San Luis Potosi,Mexico_San Luis PotosÃ­
+Mexico_San Luis Potosi,Mexico_San Luis Potosí
 Mexico_Sinaloa,Mexico_Sinaloa
 Mexico_Sonora,Mexico_Sonora
 Mexico_Tabasco,Mexico_Tabasco
@@ -416,7 +416,7 @@ Mexico_Tamaulipas,Mexico_Tamaulipas
 Mexico_Tlaxcala,Mexico_Tlaxcala
 Mexico_Unknown,
 Mexico_Veracruz,Mexico_Veracruz
-Mexico_Yucatan,Mexico_YucatÃ¡n
+Mexico_Yucatan,Mexico_Yucatán
 Mexico_Zacatecas,Mexico_Zacatecas
 Moldova_,Moldova_
 Monaco_,Monaco_
@@ -461,17 +461,17 @@ Panama_,Panama_
 Papua New Guinea_,Papua New Guinea_
 Paraguay_,Paraguay_
 Peru_Amazonas,Peru_Amazonas
-Peru_Ancash,Peru_Ãncash
-Peru_Apurimac,Peru_ApurÃ­mac
+Peru_Ancash,Peru_Áncash
+Peru_Apurimac,Peru_Apurímac
 Peru_Arequipa,Peru_Arequipa
 Peru_Ayacucho,Peru_Ayacucho
 Peru_Cajamarca,Peru_Cajamarca
 Peru_Callao,Peru_Callao
 Peru_Cusco,Peru_Cusco
-Peru_Huancavelica,Peru_HuÃ¡nuco
+Peru_Huancavelica,Peru_Huánuco
 Peru_Huanuco,Peru_Huancavelica
 Peru_Ica,Peru_Ica
-Peru_Junin,Peru_JunÃ­n
+Peru_Junin,Peru_Junín
 Peru_La Libertad,Peru_La Libertad
 Peru_Lambayeque,Peru_Lambayeque
 Peru_Lima,Peru_Lima Region
@@ -481,7 +481,7 @@ Peru_Moquegua,Peru_Moquegua
 Peru_Pasco,Peru_Pasco
 Peru_Piura,Peru_Piura
 Peru_Puno,Peru_Puno
-Peru_San Martin,Peru_San MartÃ­n
+Peru_San Martin,Peru_San Martín
 Peru_Tacna,Peru_Tacna
 Peru_Tumbes,Peru_Tumbes
 Peru_Ucayali,Peru_Ucayali
@@ -592,16 +592,16 @@ Solomon Islands_,Solomon Islands_
 Somalia_,Somalia_
 South Africa_,South Africa_
 South Sudan_,South Sudan_
-Spain_Andalusia,Spain_AndalucÃ­a
-Spain_Aragon,Spain_AragÃ³n
+Spain_Andalusia,Spain_Andalucía
+Spain_Aragon,Spain_Aragón
 Spain_Asturias,Spain_Asturias
 Spain_Baleares,Spain_Islas Baleares
 Spain_C. Valenciana,Spain_Comunidad Valenciana
 Spain_Canarias,Spain_Islas Canarias
 Spain_Cantabria,Spain_Cantabria
 Spain_Castilla - La Mancha,Spain_Castilla-La Mancha
-Spain_Castilla y Leon,Spain_Castilla y LeÃ³n
-Spain_Catalonia,Spain_CataluÃ±a
+Spain_Castilla y Leon,Spain_Castilla y León
+Spain_Catalonia,Spain_Cataluña
 Spain_Ceuta,Spain_Ceuta
 Spain_Extremadura,Spain_Extremadura
 Spain_Galicia,Spain_Galicia
@@ -610,32 +610,32 @@ Spain_Madrid,Spain_Comunidad de Madrid
 Spain_Melilla,Spain_Melilla
 Spain_Murcia,Spain_Region de Murcia
 Spain_Navarra,Spain_Navarra
-Spain_Pais Vasco,Spain_PaÃ­s Vasco
+Spain_Pais Vasco,Spain_País Vasco
 Spain_Unknown,
 Sri Lanka_,Sri Lanka_
 Sudan_,Sudan_
 Suriname_,Suriname_
 Sweden_Blekinge,Sweden_Blekinge
 Sweden_Dalarna,Sweden_Dalarna
-Sweden_Gavleborg,Sweden_GÃ¤vleborg
+Sweden_Gavleborg,Sweden_Gävleborg
 Sweden_Gotland,Sweden_Gotland
 Sweden_Halland,Sweden_Halland
-Sweden_Jamtland Harjedalen,Sweden_JÃ¤mtland HÃ¤rjedalen
-Sweden_Jonkoping,Sweden_JÃ¶nkÃ¶ping
+Sweden_Jamtland Harjedalen,Sweden_Jämtland Härjedalen
+Sweden_Jonkoping,Sweden_Jönköping
 Sweden_Kalmar,Sweden_Kalmar
 Sweden_Kronoberg,Sweden_Kronoberg
 Sweden_Norrbotten,Sweden_Norrbotten
-Sweden_Orebro,Sweden_Ã–rebro
-Sweden_Ostergotland,Sweden_Ã–stergÃ¶tland
-Sweden_Skane,Sweden_SkÃ¥ne
-Sweden_Sormland,Sweden_SÃ¶dermanland
+Sweden_Orebro,Sweden_Örebro
+Sweden_Ostergotland,Sweden_Östergötland
+Sweden_Skane,Sweden_Skåne
+Sweden_Sormland,Sweden_Södermanland
 Sweden_Stockholm,Sweden_Stockholm
 Sweden_Uppsala,Sweden_Uppsala
-Sweden_Varmland,Sweden_VÃ¤rmland
-Sweden_Vasterbotten,Sweden_VÃ¤sterbotten
-Sweden_Vasternorrland,Sweden_VÃ¤sternorrland
-Sweden_Vastmanland,Sweden_VÃ¤stmanland
-Sweden_Vastra Gotaland,Sweden_VÃ¤stra GÃ¶taland
+Sweden_Varmland,Sweden_Värmland
+Sweden_Vasterbotten,Sweden_Västerbotten
+Sweden_Vasternorrland,Sweden_Västernorrland
+Sweden_Vastmanland,Sweden_Västmanland
+Sweden_Vastra Gotaland,Sweden_Västra Götaland
 Switzerland_,Switzerland_
 Syria_,Syria_
 Taiwan*_,Taiwan*_
@@ -797,7 +797,7 @@ Argentina_,Argentina_Salta
 Argentina_,Argentina_Buenos Aires Province
 Argentina_,Argentina_City of Buenos Aires
 Argentina_,Argentina_San Luis
-Argentina_,Argentina_Entre RÃ­os
+Argentina_,Argentina_Entre Ríos
 Argentina_,Argentina_La Rioja
 Argentina_,Argentina_Santiago del Estero
 Argentina_,Argentina_Chaco
@@ -807,14 +807,14 @@ Argentina_,Argentina_La Pampa
 Argentina_,Argentina_Mendoza
 Argentina_,Argentina_Misiones
 Argentina_,Argentina_Formosa
-Argentina_,Argentina_NeuquÃ©n
-Argentina_,Argentina_RÃ­o Negro
+Argentina_,Argentina_Neuquén
+Argentina_,Argentina_Río Negro
 Argentina_,Argentina_Santa Fe
 Argentina_,Argentina_TucumÃ¡n
 Argentina_,Argentina_Chubut
 Argentina_,Argentina_Tierra del Fuego
 Argentina_,Argentina_Corrientes
-Argentina_,Argentina_CÃ³rdoba
+Argentina_,Argentina_Córdoba
 Argentina_,Argentina_Jujuy
 Argentina_,Argentina_Santa Cruz
 American Samoa_,
@@ -845,25 +845,25 @@ Bolivia_Chuquisaca,Bolivia_Chuquisaca
 Bolivia_La Paz,Bolivia_La Paz
 Bolivia_Pando,Bolivia_Pando
 Bolivia_Oruro,Bolivia_Oruro
-Bolivia_PotosÃ­,Bolivia_PotosÃ­
+Bolivia_PotosÃ­,Bolivia_Potosí
 Bolivia_Santa Cruz,Bolivia_Santa Cruz
 Bolivia_Tarija,Bolivia_Tarija
 Congo_,Democratic Republic of the Congo_Kongo Central
 Congo_,Democratic Republic of the Congo_Bandundu Province
 Congo (Brazzaville)_,Democratic Republic of the Congo_Bas-Uele
-Congo_,Democratic Republic of the Congo_Ã‰quateur
+Congo_,Democratic Republic of the Congo_Équateur
 Congo_,Democratic Republic of the Congo_Haut-Katanga Province
 Congo_,Democratic Republic of the Congo_Haut-Lomami District
 Congo_,Democratic Republic of the Congo_Haut-Uele
 Congo_,Democratic Republic of the Congo_Ituri Interim Administration
 Congo_,Democratic Republic of the Congo_Katanga Province
-Congo_,Democratic Republic of the Congo_KasaÃ¯-Central
+Congo_,Democratic Republic of the Congo_Kasaï-Central
 Congo_,Democratic Republic of the Congo_Kasai-Oriental
 Congo_,Democratic Republic of the Congo_Kwango Province
 Congo_,Democratic Republic of the Congo_Kwilu
 Congo (Kinshasa)_,Democratic Republic of the Congo_Kinshasa
-Congo_,Democratic Republic of the Congo_KasaÃ¯ District
-Congo,Democratic Republic of the Congo_KasaÃ¯-Occidental
+Congo_,Democratic Republic of the Congo_Kasaï-Central
+Congo,Democratic Republic of the Congo_Kasaï-Occidental
 Congo,Democratic Republic of the Congo_Lomami Province
 Congo,Democratic Republic of the Congo_Lualaba Province
 Congo,Democratic Republic of the Congo_Maniema
@@ -882,22 +882,22 @@ Costa Rica_,Costa Rica_Alajuela Province
 Costa Rica,Costa Rica_Provincia de Cartago
 Costa Rica,Costa Rica_Guanacaste Province
 Costa Rica,Costa Rica_Heredia Province
-Costa Rica,Costa Rica_LimÃ³n Province
+Costa Rica,Costa Rica_Limón Province
 Costa Rica,Costa Rica_Puntarenas Province
-Costa Rica,Costa Rica_San JosÃ© Province
-Cuba_,Cuba_Pinar del RÃ­o Province
+Costa Rica,Costa Rica_San José Province
+Cuba_,Cuba_Pinar del Río Province
 Cuba_,Cuba_Havana Province
 Cuba_,Cuba_Matanzas Province
 Cuba_,Cuba_Villa Clara Province
 Cuba_,Cuba_Cienfuegos Province
-Cuba_,Cuba_Sancti SpÃ­ritus Province
-Cuba_,Cuba_Ciego de Ãvila Province
-Cuba_,Cuba_CamagÃ¼ey Province
+Cuba_,Cuba_Sancti Spíritus Province
+Cuba_,Cuba_Ciego de Ávila Province
+Cuba_,Cuba_Camagüey Province
 Cuba_,Cuba_Las Tunas Province
-Cuba_,Cuba_HolguÃ­n Province
+Cuba_,Cuba_Holguín Province
 Cuba_,Cuba_Granma Province
 Cuba_,Cuba_Santiago de Cuba Province
-Cuba_,Cuba_GuantÃ¡namo Province
+Cuba_,Cuba_Guantánamo Province
 Cuba_,Cuba_Artemisa Province
 Cuba_,Cuba_Mayabeque Province
 Cuba_,Cuba_Isla de la Juventud
@@ -905,11 +905,11 @@ Czechia_,Czech Republic_
 Czechia_,Czech Republic_Prague
 Czechia_,Czech Republic_Central Bohemian Region
 Czechia_,Czech Republic_South Bohemian Region
-Czechia_,Czech Republic_PlzeÅˆ Region
+Czechia_,Czech Republic_Plzeň Region
 Czechia_,Czech Republic_Karlovy Vary Region
-Czechia_,Czech Republic_ÃšstÃ­ nad Labem Region
+Czechia_,Czech Republic_Ústí nad Labem Region
 Czechia_,Czech Republic_Liberec Region
-Czechia_,Czech Republic_Hradec KrÃ¡lovÃ© Region
+Czechia_,Czech Republic_Hradec Králové Region
 Czechia_,Czech Republic_Pardubice Region
 Czechia_,Czech Republic_Vysocina Region
 Czechia_,Czech Republic_South Moravian Region
@@ -920,84 +920,84 @@ Dominican Republic_,Dominican Republic_Distrito Nacional
 Dominican Republic_,Dominican Republic_Azua Province
 Dominican Republic_,Dominican Republic_Baoruco Province
 Dominican Republic_,Dominican Republic_Barahona Province
-Dominican Republic_,Dominican Republic_DajabÃ³n Province
+Dominican Republic_,Dominican Republic_Dajabón Province
 Dominican Republic_,Dominican Republic_Duarte Province
-Dominican Republic_,Dominican Republic_ElÃ­as PiÃ±a Province
+Dominican Republic_,Dominican Republic_Elías Piña Province
 Dominican Republic_,Dominican Republic_El Seibo Province
 Dominican Republic_,Dominican Republic_Espaillat Province
 Dominican Republic_,Dominican Republic_Independencia
 Dominican Republic_,Dominican Republic_La Altagracia Province
 Dominican Republic_,Dominican Republic_La Romana Province
 Dominican Republic_,Dominican Republic_La Vega Province
-Dominican Republic_,Dominican Republic_MarÃ­a Trinidad SÃ¡nchez Province
+Dominican Republic_,Dominican Republic_María Trinidad Sánchez Province
 Dominican Republic_,Dominican Republic_Monte Cristi Province
 Dominican Republic_,Dominican Republic_Pedernales Province
 Dominican Republic_,Dominican Republic_Peravia Province
 Dominican Republic_,Dominican Republic_Puerto Plata Province
 Dominican Republic_,Dominican Republic_Hermanas Mirabal Province
-Dominican Republic_,Dominican Republic_SamanÃ¡ Province
-Dominican Republic_,Dominican Republic_San CristÃ³bal Province
+Dominican Republic_,Dominican Republic_Samaná Province
+Dominican Republic_,Dominican Republic_San Cristóbal Province
 Dominican Republic_,Dominican Republic_San Juan Province
-Dominican Republic_,Dominican Republic_San Pedro de MacorÃ­s
-Dominican Republic_,Dominican Republic_SÃ¡nchez RamÃ­rez Province
+Dominican Republic_,Dominican Republic_San Pedro de Macorís
+Dominican Republic_,Dominican Republic_Sánchez Ramírez Province
 Dominican Republic_,Dominican Republic_Santiago Province
-Dominican Republic_,Dominican Republic_Santiago RodrÃ­guez Province
+Dominican Republic_,Dominican Republic_Santiago Rodríguez Province
 Dominican Republic_,Dominican Republic_Valverde Province
-Dominican Republic_,Dominican Republic_MonseÃ±or Nouel Province
+Dominican Republic_,Dominican Republic_Monseñor Nouel Province
 Dominican Republic_,Dominican Republic_Monte Plata Province
 Dominican Republic_,Dominican Republic_Hato Mayor Province
-Dominican Republic_,Dominican Republic_San JosÃ© de Ocoa Province
+Dominican Republic_,Dominican Republic_San José de Ocoa Province
 Dominican Republic_,Dominican Republic_Santo Domingo Province
 Ecuador_,Ecuador_Azuay Province
-Ecuador_,Ecuador_BolÃ­var Province
+Ecuador_,Ecuador_Bolívar Province
 Ecuador_,Ecuador_Carchi Province
 Ecuador_,Ecuador_Orellana Province
 Ecuador_,Ecuador_Esmeraldas
-Ecuador_,Ecuador_CaÃ±ar Province
+Ecuador_,Ecuador_Cañar Province
 Ecuador_,Ecuador_Guayas Province
 Ecuador_,Ecuador_Chimborazo Province
 Ecuador_,Ecuador_Imbabura Province
 Ecuador_,Ecuador_Loja Province
-Ecuador_,Ecuador_ManabÃ­ Provin
+Ecuador_,Ecuador_Manabí Provin
 Ecuador_,Ecuador_Napo Province
 Ecuador_,Ecuador_El Oro Province
 Ecuador_,Ecuador_Pichincha Province
-Ecuador_,Ecuador_Los RÃ­os Province
+Ecuador_,Ecuador_Los Ríos Province
 Ecuador_,Ecuador_Morona-Santiago Province
 Ecuador_,Ecuador_Santo Domingo de los TsÃ¡chilas Province
 Ecuador_,Ecuador_Santa Elena Province
 Ecuador_,Ecuador_Tungurahua Province
-Ecuador_,Ecuador_SucumbÃ­os Province
-Ecuador_,Ecuador_GalÃ¡pagos Province
+Ecuador_,Ecuador_Sucumbíos Province
+Ecuador_,Ecuador_Galápagos Province
 Ecuador_,Ecuador_Cotopaxi Province
 Ecuador_,Ecuador_Pastaza Province
 Ecuador_,Ecuador_Zamora-Chinchipe Province
-El Salvador_,El Salvador_AhuachapÃ¡n Department
-El Salvador_,El Salvador_CabaÃ±as Department
+El Salvador_,El Salvador_Ahuachapán Department
+El Salvador_,El Salvador_Cabañas Department
 El Salvador_,El Salvador_Chalatenango Department
-El Salvador_,El Salvador_CuscatlÃ¡n Department
+El Salvador_,El Salvador_Cuscatlán Department
 El Salvador_,El Salvador_La Libertad Department
-El Salvador_,El Salvador_MorazÃ¡n Department
+El Salvador_,El Salvador_Morazán Department
 El Salvador_,El Salvador_La Paz Department
 El Salvador_,El Salvador_Santa Ana Department
 El Salvador_,El Salvador_San Miguel Department
 El Salvador_,El Salvador_Sonsonate Department
 El Salvador_,El Salvador_San Salvador Department
 El Salvador_,El Salvador_San Vicente Department
-El Salvador_,El Salvador_La UniÃ³n Department
-El Salvador_,El Salvador_UsulutÃ¡n Department
-France_,France_Auvergne-RhÃ´ne-Alpes
-France_,France_Bourgogne-Franche-ComtÃ©
+El Salvador_,El Salvador_La Unión Department
+El Salvador_,El Salvador_Usulután Department
+France_,France_Auvergne-Rhône-Alpes
+France_,France_Bourgogne-Franche-Comté
 France_,France_Brittany
 France_,France_Corsica
 France_,France_Centre-Val de Loire
 France_,France_Grand Est
 France_,France_Hauts-de-France
-France_,France_ÃŽle-de-France
+France_,France_Île-de-France
 France_,France_Nouvelle-Aquitaine
 France_,France_Normandy
 France_,France_Occitanie
-France_,France_Provence-Alpes-CÃ´te d'Azur
+France_,France_Provence-Alpes-Côte d'Azur
 France_,France_Pays de la Loire
 French Southern Territories_,French Southern Territories_
 Guatemala_,Guatemala_Alta Verapaz Department
@@ -1010,17 +1010,17 @@ Guatemala_,Guatemala_Huehuetenango Department
 Guatemala_,Guatemala_Izabal Department
 Guatemala_,Guatemala_Jalapa Department
 Guatemala_,Guatemala_Jutiapa Department
-Guatemala_,Guatemala_PetÃ©n Department
+Guatemala_,Guatemala_Petén Department
 Guatemala_,Guatemala_El Progreso Department
-Guatemala_,Guatemala_QuichÃ© Department
+Guatemala_,Guatemala_Quiché Department
 Guatemala_,Guatemala_Quetzaltenango Department
 Guatemala_,Guatemala_Retalhuleu Department
-Guatemala_,Guatemala_SacatepÃ©quez Department
+Guatemala_,Guatemala_Sacatepéquez Department
 Guatemala_,Guatemala_San Marcos Department
-Guatemala_,Guatemala_SololÃ¡ Department
+Guatemala_,Guatemala_Sololá Department
 Guatemala_,Guatemala_Santa Rosa Department
-Guatemala_,Guatemala_SuchitepÃ©quez Department
-Guatemala_,Guatemala_TotonicapÃ¡n Department
+Guatemala_,Guatemala_Suchitepéquez Department
+Guatemala_,Guatemala_Totonicapán Department
 Guatemala_,Guatemala_Zacapa Department
 Haiti_,Haiti_Artibonite
 Haiti_,Haiti_Centre
@@ -1032,22 +1032,22 @@ Haiti_,Haiti_Nord-Ouest
 Haiti_,Haiti_Ouest
 Haiti_,Haiti_Sud
 Haiti_,Haiti_Sud-Est
-Honduras_,Honduras_AtlÃ¡ntida Department
+Honduras_,Honduras_Atlántida Department
 Honduras_,Honduras_Choluteca Department
-Honduras_,Honduras_ColÃ³n Department
+Honduras_,Honduras_Colón Department
 Honduras_,Honduras_Comayagua Department
-Honduras_,Honduras_CopÃ¡n Department
-Honduras_,Honduras_CortÃ©s Department
-Honduras_,Honduras_El ParaÃ­so Department
-Honduras_,Honduras_Francisco MorazÃ¡n Department
+Honduras_,Honduras_Copán Department
+Honduras_,Honduras_Cortés Department
+Honduras_,Honduras_El Paraíso Department
+Honduras_,Honduras_Francisco Morazán Department
 Honduras_,Honduras_Gracias a Dios Department
 Honduras_,Honduras_Bay Islands Department
-Honduras_,Honduras_IntibucÃ¡ Department
+Honduras_,Honduras_Intibucá Department
 Honduras_,Honduras_Lempira Department
 Honduras_,Honduras_La Paz Department
 Honduras_,Honduras_Ocotepeque Department
 Honduras_,Honduras_Olancho Department
-Honduras_,Honduras_Santa BÃ¡rbara Department
+Honduras_,Honduras_Santa Bárbara Department
 Honduras_,Honduras_Valle Department
 Honduras_,Honduras_Yoro Department
 Indonesia_,Indonesia_Aceh
@@ -1233,24 +1233,24 @@ Nicaragua_,Nicaragua_Boaco Department
 Nicaragua_,Nicaragua_Carazo Department
 Nicaragua_,Nicaragua_Chinandega Department
 Nicaragua_,Nicaragua_Chontales Department
-Nicaragua_,Nicaragua_EstelÃ­ Department
+Nicaragua_,Nicaragua_Estelí Department
 Nicaragua_,Nicaragua_Granada Department
 Nicaragua_,Nicaragua_Jinotega Department
-Nicaragua_,Nicaragua_LeÃ³n Department
+Nicaragua_,Nicaragua_León Department
 Nicaragua_,Nicaragua_Madriz Department
 Nicaragua_,Nicaragua_Managua Department
 Nicaragua_,Nicaragua_Masaya Department
 Nicaragua_,Nicaragua_Matagalpa Department
 Nicaragua_,Nicaragua_Nueva Segovia Department
 Nicaragua_,Nicaragua_Rivas Department
-Nicaragua_,Nicaragua_RÃ­o San Juan Department
+Nicaragua_,Nicaragua_Río San Juan Department
 Niue_,Niue_
 Norfolk Island_,Norfolk Island_
 North Korea_,North Korea_
 Northern Mariana Islands_,Northern Mariana Islands_
 Norway_,Norway_Oslo
 Norway_,Norway_Rogaland
-Norway_,Norway_MÃ¸re og Romsdal
+Norway_,Norway_Møre og Romsdal
 Norway_,Norway_Nordland
 Norway_,Norway_Svalbard
 Norway_,Norway_Jan Mayen
@@ -1259,37 +1259,37 @@ Norway_,Norway_Innlandet
 Norway_,Norway_Vestfold og Telemark
 Norway_,Norway_Agder
 Norway_,Norway_Vestland
-Norway_,Norway_TrÃ¸ndelag
+Norway_,Norway_Trøndelag
 Norway_,Norway_Troms og Finnmark
 Panama_,Panama_Bocas del Toro Province
-Panama_,Panama_PanamÃ¡ Oeste Province
-Panama_,Panama_CoclÃ© Province
-Panama_,Panama_ColÃ³n Province
-Panama_,Panama_ChiriquÃ­ Province
-Panama_,Panama_DariÃ©n Province
+Panama_,Panama_Panamá Oeste Province
+Panama_,Panama_Coclé Province
+Panama_,Panama_Colón Province
+Panama_,Panama_Chiriquí Province
+Panama_,Panama_Darién Province
 Panama_,Panama_Herrera Province
 Panama_,Panama_Los Santos Province
-Panama_,Panama_PanamÃ¡ Province
+Panama_,Panama_Panamá Province
 Panama_,Panama_Veraguas Province
-Panama_,Panama_EmberÃ¡-Wounaan Comarca
+Panama_,Panama_Emberá-Wounaan Comarca
 Panama_,Panama_Guna Yala
-Paraguay_,Paraguay_ConcepciÃ³n Department
-Paraguay_,Paraguay_Alto ParanÃ¡ Department
+Paraguay_,Paraguay_Concepción Department
+Paraguay_,Paraguay_Alto Paraná Department
 Paraguay_,Paraguay_Central Department
-Paraguay_,Paraguay_Ã‘eembucÃº Department
+Paraguay_,Paraguay_Ñeembucú Department
 Paraguay_,Paraguay_Amambay Department
-Paraguay_,Paraguay_CanindeyÃº
+Paraguay_,Paraguay_Canindeyú
 Paraguay_,Paraguay_Presidente Hayes Department
 Paraguay_,Paraguay_Alto Paraguay Department
-Paraguay_,Paraguay_BoquerÃ³n Department
+Paraguay_,Paraguay_Boquerón Department
 Paraguay_,Paraguay_San Pedro Department
 Paraguay_,Paraguay_Cordillera Department
-Paraguay_,Paraguay_GuairÃ¡ Department
-Paraguay_,Paraguay_CaaguazÃº
-Paraguay_,Paraguay_CaazapÃ¡
-Paraguay_,Paraguay_ItapÃºa
+Paraguay_,Paraguay_Guairá Department
+Paraguay_,Paraguay_Caaguazú
+Paraguay_,Paraguay_Caazapá
+Paraguay_,Paraguay_Itapúa
 Paraguay_,Paraguay_Misiones Department
-Paraguay_,Paraguay_ParaguarÃ­ Department
+Paraguay_,Paraguay_Paraguarí Department
 Paraguay_,Paraguay_Capital District
 Peru_,Peru_Metropolitan Municipality of Lima
 Philippines_,Philippines_National Capital Region
@@ -1314,7 +1314,7 @@ Poland_,Poland_Lower Silesia
 Poland_,Poland_Kuiavia-Pomerania
 Poland_,Poland_Lublin
 Poland_,Poland_Lubusz
-Poland_,Poland_ÅÃ³dÅº
+Poland_,Poland_Łódź
 Poland_,Poland_Lesser Poland
 Poland_,Poland_Mazovia
 Poland_,Poland_Opole
@@ -1335,47 +1335,47 @@ Portugal_,Portugal_Azores
 Portugal_,Portugal_Madeira
 Puerto Rico_,Puerto Rico_
 Romania_,Romania_Alba
-Romania_,Romania_ArgeÈ™
 Romania_,Romania_Arad
-Romania_,Romania_BucureÈ™ti
-Romania_,Romania_BacÄƒu
+Romania_,Romania_Argeș
+Romania_,Romania_Bacău
 Romania_,Romania_Bihor
-Romania_,Romania_BistriÈ›a-NÄƒsÄƒud
-Romania_,Romania_BrÄƒila
-Romania_,Romania_BotoÈ™ani
-Romania_,Romania_BraÈ™ov
-Romania_,Romania_BuzÄƒu
+Romania_,Romania_Bistrița-Năsăud
+Romania_,Romania_Botoșani
+Romania_,Romania_Brăila
+Romania_,Romania_Brașov
+Romania_,Romania_București
+Romania_,Romania_Buzău
+Romania_,Romania_Călărași
+Romania_,Romania_Caraș-Severin
 Romania_,Romania_Cluj
-Romania_,Romania_CÄƒlÄƒraÈ™i
-Romania_,Romania_CaraÈ™-Severin
-Romania_,Romania_ConstanÈ›a
+Romania_,Romania_Constanța
 Romania_,Romania_Covasna
-Romania_,Romania_DÃ¢mboviÈ›a
+Romania_,Romania_Dâmbovița
 Romania_,Romania_Dolj
-Romania_,Romania_Gorj
-Romania_,Romania_GalaÈ›i
+Romania_,Romania_Galați
 Romania_,Romania_Giurgiu
-Romania_,Romania_Hunedoara
+Romania_,Romania_Gorj
 Romania_,Romania_Harghita
+Romania_,Romania_Hunedoara
+Romania_,Romania_Ialomița
+Romania_,Romania_Iași
 Romania_,Romania_Ilfov
-Romania_,Romania_IalomiÈ›a
-Romania_,Romania_IaÈ™i
-Romania_,Romania_MehedinÈ›i
-Romania_,Romania_MaramureÈ™
-Romania_,Romania_MureÈ™
-Romania_,Romania_NeamÈ›
+Romania_,Romania_Maramureș
+Romania_,Romania_Mehedinți
+Romania_,Romania_Mureș
+Romania_,Romania_Neamț
 Romania_,Romania_Olt
 Romania_,Romania_Prahova
-Romania_,Romania_Sibiu
-Romania_,Romania_SÄƒlaj
+Romania_,Romania_Sălaj
 Romania_,Romania_Satu Mare
+Romania_,Romania_Sibiu
 Romania_,Romania_Suceava
-Romania_,Romania_Tulcea
-Romania_,Romania_TimiÈ™
 Romania_,Romania_Teleorman
-Romania_,Romania_VÃ¢lcea
-Romania_,Romania_Vrancea
+Romania_,Romania_Timiș
+Romania_,Romania_Tulcea
+Romania_,Romania_Vâlcea
 Romania_,Romania_Vaslui
+Romania_,Romania_Vrancea
 Saint Helena_,Saint Helena_
 Samoa_,Samoa_
 South Africa_,South Africa_Eastern Cape
@@ -1409,31 +1409,31 @@ Sudan_,Sudan_Sennar
 Svalbard and Jan Mayen_,Svalbard and Jan Mayen_
 Swaziland_,Swaziland_
 Switzerland_,Switzerland_Aargau
-Switzerland_,Switzerland_Appenzell Innerrhoden
 Switzerland_,Switzerland_Appenzell Ausserrhoden
-Switzerland_,Switzerland_Bern
+Switzerland_,Switzerland_Appenzell Innerrhoden
 Switzerland_,Switzerland_Basel-Landschaft
 Switzerland_,Switzerland_Basel-Stadt
+Switzerland_,Switzerland_Bern
 Switzerland_,Switzerland_Fribourg
 Switzerland_,Switzerland_Geneva
 Switzerland_,Switzerland_Glarus
 Switzerland_,Switzerland_Grisons
 Switzerland_,Switzerland_Jura
 Switzerland_,Switzerland_Lucerne
-Switzerland_,Switzerland_NeuchÃ¢tel
+Switzerland_,Switzerland_Neuchâtel
 Switzerland_,Switzerland_Nidwalden
 Switzerland_,Switzerland_Obwalden
-Switzerland_,Switzerland_St. Gallen
 Switzerland_,Switzerland_Schaffhausen
-Switzerland_,Switzerland_Solothurn
 Switzerland_,Switzerland_Schwyz
+Switzerland_,Switzerland_Solothurn
+Switzerland_,Switzerland_St. Gallen
 Switzerland_,Switzerland_Thurgau
 Switzerland_,Switzerland_Ticino
 Switzerland_,Switzerland_Uri
-Switzerland_,Switzerland_Vaud
 Switzerland_,Switzerland_Valais
+Switzerland_,Switzerland_Vaud
 Switzerland_,Switzerland_Zug
-Switzerland_,Switzerland_ZÃ¼rich
+Switzerland_,Switzerland_Zürich
 Tokelau_,Tokelau_
 Tonga_,Tonga_
 Turkmenistan_,Turkmenistan_
@@ -1458,43 +1458,43 @@ Uruguay_,Uruguay_Canelones Department
 Uruguay_,Uruguay_Cerro Largo Department
 Uruguay_,Uruguay_Colonia Department
 Uruguay_,Uruguay_Durazno Department
-Uruguay_,Uruguay_Florida Department
 Uruguay_,Uruguay_Flores Department
+Uruguay_,Uruguay_Florida Department
 Uruguay_,Uruguay_Lavalleja Department
 Uruguay_,Uruguay_Maldonado Department
 Uruguay_,Uruguay_Montevideo Department
-Uruguay_,Uruguay_PaysandÃº Department
-Uruguay_,Uruguay_RÃ­o Negro Department
-Uruguay_,Uruguay_Rocha Department
+Uruguay_,Uruguay_Paysandú Department
+Uruguay_,Uruguay_Río Negro Department
 Uruguay_,Uruguay_Rivera Department
+Uruguay_,Uruguay_Rocha Department
 Uruguay_,Uruguay_Salto Department
-Uruguay_,Uruguay_San JosÃ© Department
+Uruguay_,Uruguay_San José Department
 Uruguay_,Uruguay_Soriano Department
-Uruguay_,Uruguay_TacuarembÃ³ Department
+Uruguay_,Uruguay_Tacuarembó Department
 Uruguay_,Uruguay_Treinta y Tres Department
-Venezuela_,Venezuela_Capital District
-Venezuela_,Venezuela_AnzoÃ¡tegui
+Venezuela_,Venezuela_Amazonas
+Venezuela_,Venezuela_Anzoátegui
 Venezuela_,Venezuela_Apure
 Venezuela_,Venezuela_Aragua
 Venezuela_,Venezuela_Barinas
-Venezuela_,Venezuela_BolÃ­var
+Venezuela_,Venezuela_Bolívar
+Venezuela_,Venezuela_Capital District
 Venezuela_,Venezuela_Carabobo
 Venezuela_,Venezuela_Cojedes
-Venezuela_,Venezuela_FalcÃ³n
-Venezuela_,Venezuela_GuÃ¡rico
+Venezuela_,Venezuela_Delta Amacuro
+Venezuela_,Venezuela_Falcón
+Venezuela_,Venezuela_Guárico
 Venezuela_,Venezuela_Lara
-Venezuela_,Venezuela_MÃ©rida
+Venezuela_,Venezuela_Mérida
 Venezuela_,Venezuela_Miranda
 Venezuela_,Venezuela_Monagas
 Venezuela_,Venezuela_Nueva Esparta
 Venezuela_,Venezuela_Portuguesa
 Venezuela_,Venezuela_Sucre
-Venezuela_,Venezuela_TÃ¡chira
+Venezuela_,Venezuela_Táchira
 Venezuela_,Venezuela_Trujillo
+Venezuela_,Venezuela_Vargas
 Venezuela_,Venezuela_Yaracuy
 Venezuela_,Venezuela_Zulia
-Venezuela_,Venezuela_Vargas
-Venezuela_,Venezuela_Delta Amacuro
-Venezuela_,Venezuela_Amazonas
 Wallis and Futuna_,Wallis and Futuna_
 Western Sahara_,Western Sahara_

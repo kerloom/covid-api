@@ -62,20 +62,23 @@ for key in df['st_key'].unique():
     try:
         gcp_key = df_dict.loc[key]['GCP']
         row_idx = df[df['st_key'] == key]['Area'].index
-        raw_data = df_gcp[(df_gcp['st_key'] == gcp_key) & (df_gcp['subregion2_name'].isnull())][['area','population']]
-        if raw_data.shape == (1,2):
+        raw_data = df_gcp[(df_gcp['st_key'] == gcp_key) & (df_gcp['subregion2_name'].isnull()) & (
+            df_gcp['locality_name'].isnull())][['area', 'population']]
+        if raw_data.shape == (1, 2):
             data = raw_data.values
         else:
-            print("Different Data Shape", gcp_key)
-            print(raw_data)
+            # print("Different Data Shape", gcp_key)
+            # print(raw_data)
             data = [np.nan, np.nan]
         df.loc[row_idx, ['Area', 'Population']] = data
     except KeyError as e:
-        print(e)
-        print("No key:", key)
+        pass
+        #print(e)
+        #print("No key:", key)
 # ------------------------------------------
 
 # Initial DF operations
+df['Population_Density'] = df['Population'] / df['Area']
 df['Country_Population'] = df.Country_Region.map(df_population.Population)
 df['Country_Confirmed'] = df.Country_Region.map(lambda x: df[df['Country_Region'] == x]['Confirmed'].sum())
 df['Country_Active'] = df.Country_Region.map(lambda x: df[df['Country_Region'] == x]['Active'].sum())
