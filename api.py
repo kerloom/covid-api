@@ -97,6 +97,7 @@ max_country_active = df['Country_Active_Percentage'].quantile(QUANTILE)
 max_new_cases = df['New_Cases_Percentage'].quantile(QUANTILE)
 max_new_cases_active = df['New_Cases_Active_Percentage'].quantile(QUANTILE)
 max_deaths = df['Death_Percentage'].quantile(QUANTILE)
+max_population_density = df['Population_Density'].quantile(QUANTILE)
 
 df['Country_Confirmed_Ratio'] = df['Country_Confirmed_Percentage'] / max_poblacion_casos * 100
 df['Country_Active_Ratio'] = df['Country_Active_Percentage'] / max_country_active * 100
@@ -106,6 +107,8 @@ df['New_Cases_Active_Ratio'] = df['New_Cases_Active_Percentage'] / max_new_cases
 df['New_Cases_Active_Ratio'] = df['New_Cases_Active_Ratio'].clip(upper=100)
 df['Death_Ratio'] = df['Death_Percentage'] / max_deaths * 100
 df['Death_Ratio'] = df['Death_Ratio'].clip(upper=100)
+df['Population_Density_Ratio'] = 10 - df['Population_Density'] / max_population_density * 10
+df['Population_Density_Ratio'] = df['Population_Density_Ratio'].clip(upper=10)
 
 df['Indice'] = df['Death_Ratio'] * 0.2 + df['New_Cases_Ratio'] * 0.6 + df['Country_Confirmed_Ratio'] * 0.2
 df['Indice_2'] = df['Death_Ratio'] * 0.4 + df['New_Cases_Ratio'] * 0.6
@@ -127,7 +130,7 @@ df['Active_Index_2'] = 10 - df['Indice_Active_2'] / max_indice_active_2 * 10
 df['Active_Index_2'] = df['Active_Index_2'].clip(lower=0)
 
 df['Safety_Index'] = df['Confirmed_Index'] * 0.4 + df['Active_Index'] * 0.6
-df['Safety_Index_2'] = df['Confirmed_Index_2'] * 0.4 + df['Active_Index_2'] * 0.6
+df['Safety_Index_2'] = df['Confirmed_Index'] * 0.54 + df['Active_Index'] * 0.36 + df['Population_Density_Ratio'] * 0.1
 
 df.to_csv('static/csv_data.csv')
 
@@ -186,15 +189,16 @@ def index():
     total_recovered = province_df['Recovered'].sum()
     incidence_rate = province_df['Incident_Rate'].mean()/max_incidence_rate*100
     new_cases = province_df['Confirmed_New_Cases'].sum()
+    population_density = province_df['Population_Density'].mean()
     # per_capita_active = total_active / population
     # per_capita_confirmed = total_confirmed / population
     # per_capita_deaths = total_deaths / population
     # per_capita_recovered = total_recovered / population
     
-    if True: #total_recovered > 0:
-        safety_index = province_df['Safety_Index'].mean()
-    else:
+    if population_density > 0:
         safety_index = province_df['Safety_Index_2'].mean()
+    else:
+        safety_index = province_df['Safety_Index'].mean()
 
     if safety_index >= 7.5:
         warning_color = 'green'
