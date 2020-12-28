@@ -1,6 +1,7 @@
 #!flask/bin/python
 import requests
 import re
+import os
 import unicodedata
 from datetime import date, timedelta
 import pandas as pd
@@ -20,14 +21,20 @@ JOHN_HOPKINS_URL = "https://services9.arcgis.com/N9p5hsImWXAccRNI/arcgis/rest/se
 QUANTILE = 0.98
 
 # https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/06-13-2020.csv
+today = date.today().strftime('%m-%d-%Y')
 yesterday = (date.today() - timedelta(days=2)).strftime('%m-%d-%Y')
 week_ago = (date.today() - timedelta(days=7)).strftime('%m-%d-%Y')
+week_and_day_ago = (date.today() - timedelta(days=8)).strftime('%m-%d-%Y')
 JHU_GITHUB = f"https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/{yesterday}.csv"
 JHU_GITHUB_WEEK = f"https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/{week_ago}.csv"
 GCP_DATA = "https://storage.googleapis.com/covid19-open-data/v2/latest/main.csv"
-POPULATION_CSV = 'world_population.csv'
-PROVINCES_CSV = 'provinces.csv'
-JHU_TO_GCP = 'jhu_to_gcp.csv'
+POPULATION_CSV = 'csv/world_population.csv'
+PROVINCES_CSV = 'csv/provinces.csv'
+JHU_TO_GCP = 'csv/jhu_to_gcp.csv'
+GCP_ROW_PROVINCES = 'csv/gcp_row_provinces.csv'
+GCP_TODAY = f'csv/gcp_historic/{today}.csv'
+GCP_WEEK = f'csv/gcp_historic/{week_ago}.csv'
+GCP_WEEK_AND_DAY = f'csv/gcp_historic/{week_and_day_ago}.csv'
 
 RISK = {
     'en': {
@@ -45,15 +52,20 @@ RISK = {
 # https://stackoverflow.com/questions/36028759/how-to-open-and-convert-sqlite-database-to-pandas-dataframe
 # https://api.wolframalpha.com/v1/result?appid=7GW5RH-PWP987529Q&i=In+what+province+is+zhengzhou%3F
 
+#TODO: Optimizar memoria solo leyendo las columnas que se utilicen con usecols
 df = pd.read_csv(JHU_GITHUB, index_col='Combined_Key')
-df_week = pd.read_csv(JHU_GITHUB_WEEK, index_col='Combined_Key')
+df_week = pd.read_csv(JHU_GITHUB_WEEK, index_col='Combined_Key', usecols=['Combined_Key', 'Confirmed'])
 df_population = pd.read_csv(POPULATION_CSV, index_col='Country')
 df_provinces = pd.read_csv(PROVINCES_CSV, index_col='Wolfram')
 df_dict = pd.read_csv(JHU_TO_GCP, index_col='JHU')
-
-# ------------- Nuevo Add GCP Columns to JHU Data ----------------------
 df_gcp = pd.read_csv(GCP_DATA)
+if os.path.exists(GCP_WEEK_AND_DAY):
+    df_gcp_week = pd.read_csv(GCP_WEEK, index_col='Combined_Key', usecols=['Confirmed'])
+# ------------- Nuevo Add GCP Columns to JHU Data ----------------------
 df_gcp['st_key'] = df_gcp['country_name'] + '_' + df_gcp['subregion1_name']
+df_gcp['combined_key'] = df_gcp['subregion1_name'] + ', ' + df_gcp['country_name']
+df_gcp['total_active'] = df_gcp['total_confirmed'] - df_gcp['total_deceased'] - df_gcp['total_recovered']
+
 df['st_key'] = df['Country_Region'] + '_' + df['Province_State']
 df['Area'] = np.nan
 df['Population'] = np.nan
@@ -75,7 +87,29 @@ for key in df['st_key'].unique():
         pass
         #print(e)
         #print("No key:", key)
-# ------------------------------------------
+# ------------- Nuevo Add GCP Rows to JHU Data ------------------
+gcp_provinces = pd.read_csv(GCP_ROW_PROVINCES)
+new_rows = []
+week_ago_rows = []
+print("Starting GCP Rows Merge")
+for province_key in gcp_provinces['GCP_st_key'].unique():
+    row = {
+        'st_key': df_gcp[df_gcp['st_key'] == province_key]['st_key'],
+        'Combined_Key': df_gcp[df_gcp['st_key'] == province_key]['combined_key'],
+        'Population': df_gcp[df_gcp['st_key'] == province_key]['population'], 
+        'Area': df_gcp[df_gcp['st_key'] == province_key]['area'], 
+        'Province_State': df_gcp[df_gcp['st_key'] == province_key]['subregion1_name'], 
+        'Country_Region': df_gcp[df_gcp['st_key'] == province_key]['country_name'], 
+        'Confirmed': df_gcp[df_gcp['st_key'] == province_key]['total_confirmed'], 
+        'Active': df_gcp[df_gcp['st_key'] == province_key]['total_active'], 
+        'Deaths': df_gcp[df_gcp['st_key'] == province_key]['total_deceased'], 
+        'Recovered': df_gcp[df_gcp['st_key'] == province_key]['total_recovered']
+    }
+    new_rows.append(row)
+    # week_ago_rows.append({'Confirmed': df_gcp_week['total_confirmed']})
+# df = pd.concat([df, new_rows])
+# df.head()
+# df_week.concat(week_ago_rows)
 
 # Initial DF operations
 df['Population_Density'] = df['Population'] / df['Area']
@@ -108,7 +142,7 @@ df['New_Cases_Active_Ratio'] = df['New_Cases_Active_Ratio'].clip(upper=100)
 df['Death_Ratio'] = df['Death_Percentage'] / max_deaths * 100
 df['Death_Ratio'] = df['Death_Ratio'].clip(upper=100)
 df['Population_Density_Ratio'] = 10 - df['Population_Density'] / max_population_density * 10
-df['Population_Density_Ratio'] = df['Population_Density_Ratio'].clip(upper=10)
+df['Population_Density_Ratio'] = df['Population_Density_Ratio'].clip(lower=0, upper=10)
 
 df['Indice'] = df['Death_Ratio'] * 0.2 + df['New_Cases_Ratio'] * 0.6 + df['Country_Confirmed_Ratio'] * 0.2
 df['Indice_2'] = df['Death_Ratio'] * 0.4 + df['New_Cases_Ratio'] * 0.6
@@ -133,6 +167,9 @@ df['Safety_Index'] = df['Confirmed_Index'] * 0.4 + df['Active_Index'] * 0.6
 df['Safety_Index_2'] = df['Confirmed_Index'] * 0.54 + df['Active_Index'] * 0.36 + df['Population_Density_Ratio'] * 0.1
 
 df.to_csv('static/csv_data.csv')
+df_gcp.to_csv(GCP_TODAY)
+if os.path.exists(GCP_WEEK_AND_DAY):
+  os.remove(GCP_WEEK_AND_DAY)
 
 # DB Init
 session = db.session
@@ -181,13 +218,10 @@ def index():
             province_df = country_df
             has_province_data = False
     
-    max_incidence_rate = df['Incident_Rate'].max()
-    
     total_active = province_df['Active'].sum()
     total_confirmed = province_df['Confirmed'].sum()
     total_deaths = province_df['Deaths'].sum()
     total_recovered = province_df['Recovered'].sum()
-    incidence_rate = province_df['Incident_Rate'].mean()/max_incidence_rate*100
     new_cases = province_df['Confirmed_New_Cases'].sum()
     population_density = province_df['Population_Density'].mean()
     # per_capita_active = total_active / population
@@ -219,7 +253,6 @@ def index():
         'total_confirmed': int(total_confirmed),
         'total_deaths': int(total_deaths),
         'total_recovered': int(total_recovered),
-        'incidence_rate': float(incidence_rate),
         'weekly_new_cases' : int(new_cases),
         # 'per_capita_active': float(per_capita_active*100),
         # 'per_capita_confirmed': float(per_capita_confirmed*100),
