@@ -60,7 +60,7 @@ df_population = pd.read_csv(POPULATION_CSV, index_col='Country')
 df_provinces = pd.read_csv(PROVINCES_CSV, index_col='Wolfram')
 df_dict = pd.read_csv(JHU_TO_GCP, index_col='JHU')
 df_gcp = pd.read_csv(GCP_DATA)
-if os.path.exists(GCP_WEEK_AND_DAY):
+if os.path.exists(GCP_WEEK):
     df_gcp_week = pd.read_csv(GCP_WEEK, usecols=['country_name', 'subregion1_name', 'subregion2_name', 'locality_name', 'total_confirmed'])
     df_gcp_week['st_key'] = df_gcp_week['country_name'] + '_' + df_gcp_week['subregion1_name']
     df_gcp_week['combined_key'] = df_gcp_week['subregion1_name'] + ', ' + df_gcp_week['country_name']
