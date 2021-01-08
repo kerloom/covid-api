@@ -9,6 +9,7 @@ import numpy as np
 from flask import Flask, jsonify, request, render_template
 from settings import app, db
 from db_models import Place
+from datetime import datetime
 
 WOLFRAM_APPID = "7GW5RH-PWP987529Q"
 WOLFRAM_BASEURL = "https://api.wolframalpha.com/v1/result"
@@ -60,7 +61,9 @@ df_provinces = pd.read_csv(PROVINCES_CSV, index_col='Wolfram')
 df_dict = pd.read_csv(JHU_TO_GCP, index_col='JHU')
 df_gcp = pd.read_csv(GCP_DATA)
 if os.path.exists(GCP_WEEK_AND_DAY):
-    df_gcp_week = pd.read_csv(GCP_WEEK, index_col='Combined_Key', usecols=['Confirmed'])
+    df_gcp_week = pd.read_csv(GCP_WEEK, usecols=['country_name', 'subregion1_name', 'subregion2_name', 'locality_name', 'total_confirmed'])
+    df_gcp_week['st_key'] = df_gcp_week['country_name'] + '_' + df_gcp_week['subregion1_name']
+    df_gcp_week['combined_key'] = df_gcp_week['subregion1_name'] + ', ' + df_gcp_week['country_name']
 # ------------- Nuevo Add GCP Columns to JHU Data ----------------------
 df_gcp['st_key'] = df_gcp['country_name'] + '_' + df_gcp['subregion1_name']
 df_gcp['combined_key'] = df_gcp['subregion1_name'] + ', ' + df_gcp['country_name']
@@ -91,25 +94,31 @@ for key in df['st_key'].unique():
 gcp_provinces = pd.read_csv(GCP_ROW_PROVINCES)
 new_rows = []
 week_ago_rows = []
-print("Starting GCP Rows Merge")
 for province_key in gcp_provinces['GCP_st_key'].unique():
-    row = {
-        'st_key': df_gcp[df_gcp['st_key'] == province_key]['st_key'],
-        'Combined_Key': df_gcp[df_gcp['st_key'] == province_key]['combined_key'],
-        'Population': df_gcp[df_gcp['st_key'] == province_key]['population'], 
-        'Area': df_gcp[df_gcp['st_key'] == province_key]['area'], 
-        'Province_State': df_gcp[df_gcp['st_key'] == province_key]['subregion1_name'], 
-        'Country_Region': df_gcp[df_gcp['st_key'] == province_key]['country_name'], 
-        'Confirmed': df_gcp[df_gcp['st_key'] == province_key]['total_confirmed'], 
-        'Active': df_gcp[df_gcp['st_key'] == province_key]['total_active'], 
-        'Deaths': df_gcp[df_gcp['st_key'] == province_key]['total_deceased'], 
-        'Recovered': df_gcp[df_gcp['st_key'] == province_key]['total_recovered']
-    }
-    new_rows.append(row)
-    # week_ago_rows.append({'Confirmed': df_gcp_week['total_confirmed']})
-# df = pd.concat([df, new_rows])
-# df.head()
-# df_week.concat(week_ago_rows)
+    df_prov = df_gcp[(df_gcp['st_key'] == province_key) & (df_gcp['subregion2_name'].isnull()) & (
+              df_gcp['locality_name'].isnull())]
+    df_prov_week = df_gcp_week[(df_gcp_week['st_key'] == province_key) & (df_gcp_week['subregion2_name'].isnull()) & (
+              df_gcp_week['locality_name'].isnull())]
+    if(len(df_prov['total_active'].values) == 1 and not np.isnan(df_prov['total_active'].values[0])):
+        row = {
+            'st_key': df_prov['st_key'].values[0],
+            'Combined_Key': df_prov['combined_key'].values[0],
+            'Population': np.int32(df_prov['population'].values[0]),
+            'Area': np.int32(df_prov['area'].values[0]),
+            'Province_State': df_prov['subregion1_name'].values[0],
+            'Country_Region': df_prov['country_name'].values[0],
+            'Confirmed': np.int32(df_prov['total_confirmed'].values[0]),
+            'Active': np.int32(df_prov['total_active'].values[0]),
+            'Deaths': np.int32(df_prov['total_deceased'].values[0]),
+            'Recovered': np.int32(df_prov['total_recovered'].values[0])
+        }
+        new_rows.append(row)
+        week_row = {'Combined_Key': df_prov_week['combined_key'].values[0],
+                    'Confirmed': np.int32(df_prov_week['total_confirmed'].values[0])}
+        week_ago_rows.append(week_row)
+df = pd.concat([df, pd.DataFrame(new_rows).set_index('Combined_Key')])
+df = df.drop(df[df['Confirmed']==0].index)
+df_week = pd.concat([df_week, pd.DataFrame(week_ago_rows).set_index('Combined_Key')])
 
 # Initial DF operations
 df['Population_Density'] = df['Population'] / df['Area']
