@@ -68,6 +68,7 @@ if os.path.exists(GCP_WEEK):
 df_gcp['st_key'] = df_gcp['country_name'] + '_' + df_gcp['subregion1_name']
 df_gcp['combined_key'] = df_gcp['subregion1_name'] + ', ' + df_gcp['country_name']
 df_gcp['total_active'] = df_gcp['total_confirmed'] - df_gcp['total_deceased'] - df_gcp['total_recovered']
+df_gcp['total_active'] = df_gcp['total_active'].clip(lower=0)
 
 df['st_key'] = df['Country_Region'] + '_' + df['Province_State']
 df['Area'] = np.nan
