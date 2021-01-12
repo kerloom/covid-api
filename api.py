@@ -129,52 +129,56 @@ df['Country_Active'] = df.Country_Region.map(lambda x: df[df['Country_Region'] =
 df['Country_Confirmed_Percentage'] = df['Country_Confirmed'] / df['Country_Population']
 df['Country_Active_Percentage'] = df['Country_Active'] / df['Country_Population']
 df['Confirmed_New_Cases'] = df['Confirmed'] - df_week['Confirmed']
-df['New_Cases_Percentage'] = df['Confirmed_New_Cases'] / df['Confirmed']
-df['New_Cases_Active_Percentage'] = df['Confirmed_New_Cases'] / df['Active']
+# df['New_Cases_Percentage'] = df['Confirmed_New_Cases'] / df['Confirmed']
+# df['New_Cases_Active_Percentage'] = df['Confirmed_New_Cases'] / df['Active']
 df['Death_Percentage'] = df['Deaths'] / df['Confirmed']
+df['New_Cases_Population'] = df['Confirmed_New_Cases'] / df['Population']
 
 # Revisar los maximos porque divisiones / 0 da infinito
 df = df.replace([np.inf, -np.inf], np.nan)
 
 max_poblacion_casos = df['Country_Confirmed_Percentage'].quantile(QUANTILE)
 max_country_active = df['Country_Active_Percentage'].quantile(QUANTILE)
-max_new_cases = df['New_Cases_Percentage'].quantile(QUANTILE)
-max_new_cases_active = df['New_Cases_Active_Percentage'].quantile(QUANTILE)
+# max_new_cases = df['New_Cases_Percentage'].quantile(QUANTILE)
+# max_new_cases_active = df['New_Cases_Active_Percentage'].quantile(QUANTILE)
 max_deaths = df['Death_Percentage'].quantile(QUANTILE)
 max_population_density = df['Population_Density'].quantile(QUANTILE)
+max_new_cases_population = df['New_Cases_Population'].quantile(QUANTILE)
 
 df['Country_Confirmed_Ratio'] = df['Country_Confirmed_Percentage'] / max_poblacion_casos * 100
 df['Country_Active_Ratio'] = df['Country_Active_Percentage'] / max_country_active * 100
-df['New_Cases_Ratio'] = df['New_Cases_Percentage'] / max_new_cases * 100
-df['New_Cases_Ratio'] = df['New_Cases_Ratio'].clip(upper=100)
-df['New_Cases_Active_Ratio'] = df['New_Cases_Active_Percentage'] / max_new_cases_active * 100
-df['New_Cases_Active_Ratio'] = df['New_Cases_Active_Ratio'].clip(upper=100)
+# df['New_Cases_Ratio'] = df['New_Cases_Percentage'] / max_new_cases * 100
+# df['New_Cases_Ratio'] = df['New_Cases_Ratio'].clip(upper=100)
+# df['New_Cases_Active_Ratio'] = df['New_Cases_Active_Percentage'] / max_new_cases_active * 100
+# df['New_Cases_Active_Ratio'] = df['New_Cases_Active_Ratio'].clip(upper=100)
 df['Death_Ratio'] = df['Death_Percentage'] / max_deaths * 100
 df['Death_Ratio'] = df['Death_Ratio'].clip(upper=100)
 df['Population_Density_Ratio'] = 10 - df['Population_Density'] / max_population_density * 10
 df['Population_Density_Ratio'] = df['Population_Density_Ratio'].clip(lower=0, upper=10)
+df['New_Cases_Pop_Ratio'] = df['New_Cases_Population'] / max_new_cases_population * 10
+df['New_Cases_Pop_Ratio'] = df['New_Cases_Pop_Ratio'].clip(lower=0, upper=10)
 
-df['Indice'] = df['Death_Ratio'] * 0.2 + df['New_Cases_Ratio'] * 0.6 + df['Country_Confirmed_Ratio'] * 0.2
-df['Indice_2'] = df['Death_Ratio'] * 0.4 + df['New_Cases_Ratio'] * 0.6
-df['Indice_Active'] = df['Death_Ratio'] * 0.2 + df['New_Cases_Active_Ratio'] * 0.6 + df['Country_Active_Ratio'] * 0.2
-df['Indice_Active_2'] = df['Death_Ratio'] * 0.4 + df['New_Cases_Active_Ratio'] * 0.6
-max_indice = df['Indice'].quantile(QUANTILE)
-max_indice_2 = df['Indice_2'].quantile(QUANTILE)
-max_indice_active = df['Indice_Active'].quantile(QUANTILE)
-max_indice_active_2 = df['Indice_Active_2'].quantile(QUANTILE)
+df['Indice'] = df['Death_Ratio'] * 0.2 + df['New_Cases_Pop_Ratio'] * 0.6 + df['Country_Confirmed_Ratio'] * 0.2
+# df['Indice_2'] = df['Death_Ratio'] * 0.4 + df['New_Cases_Ratio'] * 0.6
+df['Indice_Active'] = df['Death_Ratio'] * 0.2 + df['New_Cases_Pop_Ratio'] * 0.6 + df['Country_Active_Ratio'] * 0.2
+# df['Indice_Active_2'] = df['Death_Ratio'] * 0.4 + df['New_Cases_Active_Ratio'] * 0.6
+# max_indice = df['Indice'].quantile(QUANTILE)
+# max_indice_2 = df['Indice_2'].quantile(QUANTILE)
+# max_indice_active = df['Indice_Active'].quantile(QUANTILE)
+# max_indice_active_2 = df['Indice_Active_2'].quantile(QUANTILE)
 
-df['Confirmed_Index'] = 10 - df['Indice'] / max_indice * 10
-df['Confirmed_Index'] = df['Confirmed_Index'].clip(lower=0)
-df['Confirmed_Index_2'] = 10 - df['Indice_2'] / max_indice_2 * 10
-df['Confirmed_Index_2'] = df['Confirmed_Index_2'].clip(lower=0)
+# df['Confirmed_Index'] = 10 - df['Indice'] / max_indice * 10
+# df['Confirmed_Index'] = df['Confirmed_Index'].clip(lower=0)
+# df['Confirmed_Index_2'] = 10 - df['Indice_2'] / max_indice_2 * 10
+# df['Confirmed_Index_2'] = df['Confirmed_Index_2'].clip(lower=0)
 
-df['Active_Index'] = 10 - df['Indice_Active'] / max_indice_active * 10
-df['Active_Index'] = df['Active_Index'].clip(lower=0)
-df['Active_Index_2'] = 10 - df['Indice_Active_2'] / max_indice_active_2 * 10
-df['Active_Index_2'] = df['Active_Index_2'].clip(lower=0)
+# df['Active_Index'] = 10 - df['Indice_Active'] / max_indice_active * 10
+# df['Active_Index'] = df['Active_Index'].clip(lower=0)
+# df['Active_Index_2'] = 10 - df['Indice_Active_2'] / max_indice_active_2 * 10
+# df['Active_Index_2'] = df['Active_Index_2'].clip(lower=0)
 
-df['Safety_Index'] = df['Confirmed_Index'] * 0.4 + df['Active_Index'] * 0.6
-df['Safety_Index_2'] = df['Confirmed_Index'] * 0.54 + df['Active_Index'] * 0.36 + df['Population_Density_Ratio'] * 0.1
+df['Safety_Index'] = df['Indice'] * 0.4 + df['Indice_Active'] * 0.6
+df['Safety_Index_2'] = df['Indice']* 0.36 + df['Indice_Active'] * 0.54 + df['Population_Density_Ratio'] * 0.1
 
 df.to_csv('static/csv_data.csv')
 df_gcp.to_csv(GCP_TODAY)

@@ -4,3 +4,4 @@ __pycache__/
 .vscode
 wolfram_queries.db
 static/csv_data.csv
+csv/gcp_historic/
