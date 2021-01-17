@@ -1,0 +1,149 @@
+Country,Github,Wolfram
+Germany,Mecklenburg-Vorpommern,Mecklenburg‐Western Pomerania
+Germany,Sachsen-Anhalt,Saxony‐Anhalt
+Germany,Sachsen,Saxony
+Germany,Nordrhein-Westfalen,North Rhine‐Westphalia
+Germany,Niedersachsen,Lower Saxony
+Germany,Thuringen,Thuringia
+Germany,Bayern,Bavaria
+Germany,Baden-Wurttemberg,Baden‐Wurttemberg
+Germany,Hessen,Hesse
+Italy,Sicilia,Sicily
+Italy,Friuli Venezia Giulia,Friuli‐Venezia Giulia
+Italy,Puglia,Apulia
+Italy,Abruzzo,Abruzzes
+Italy,Emilia-Romagna,Emilia‐Romagna
+Italy,Lombardia,Lombardy
+Spain,Pais Vasco,Basque Country
+Spain,C. Valenciana,Valencia
+Spain,Castilla y Leon,Castile and Leon
+Spain,Castilla - La Mancha,Castile-La Mancha
+Spain,Canarias,Canary Island
+Spain,Baleares,Balearic Island
+Brazil,Sao Paulo,São Paulo
+Brazil,Rio Grande do Sul,Rio Grande Do Sul
+Chile,Los Rios,Los Ríos
+Chile,OHiggins,O´Higgins
+Chile,Arica y Parinacota,Arica and Parinacota
+Chile,Aysen,Aysen
+Chile,Nuble,Ñuble
+Chile,Biobio,Biobío
+China,Tibet,Xizang
+China,Inner Mongolia,Neimenggu
+Colombia,Capital District,Distrito Capital
+Japan,Gunma,Gumma
+Mexico,Baja California Sur,Los Reyes
+Mexico,Ciudad de Mexico,Ciudad de México
+Pakistan,Islamabad,F.C.T. Pakistan
+Pakistan,Balochistan,Baluchistan
+Pakistan,Gilgit-Baltistan,Northern Areas
+Peru,Huanuco,Huánuco
+Peru,San Martin,San Martín
+Peru,Junin,Junín
+Peru,Apurimac,Apurímac
+Russia,Nenets Autonomous Okrug,Nenets
+Russia,Bryansk Oblast,Bryansk
+Russia,Lipetsk Oblast,Lipetsk
+Russia,Tambov Oblast,Tambov
+Russia,Bashkortostan Republic,Bashkortostan
+Russia,Ryazan Oblast,Ryazan´
+Russia,Tyva Republic,Tuvan´s People Republic
+Russia,Tatarstan Republic,Tatarstan
+Russia,Kaluga Oblast,Kaluga
+Russia,Khanty-Mansi Autonomous Okrug,Khanty-Mansi 
+Russia,Mari El Republic,Mariy-El
+Russia,Yaroslavl Oblast,Yaroslavl´
+Russia,Kursk Oblast,Kursk
+Russia,Chukotka Autonomous Okrug,Chukot
+Russia,Chuvashia Republic,Chuvash
+Russia,Moscow Oblast,Moscow
+Russia,Chelyabinsk Oblast,Chelyabinsk
+Russia,Leningrad Oblast,Leningrad
+Russia,Chechen Republic,Chechnya
+Russia,Zabaykalsky Krai,Chita
+Russia,Karachay-Cherkess Republic,Karachay-Cherkess
+Russia,Adygea Republic,Adygey
+Russia,Belgorod Oblast,Belgorod
+Russia,Mordovia Republic,Mordovia
+Russia,Smolensk Oblast,Smolensk
+Russia,Murmansk Oblast,Murmansk
+Russia,Altai Krai,Altay
+Russia,Khakassia Republic,Khakass
+Russia,Kamchatka Krai,Kamchatka
+Russia,Ivanovo Oblast,Ivanovo
+Russia,Komi Republic,Komi
+Russia,Nizhny Novgorod Oblast,Nizhegorod
+Russia,Voronezh Oblast,Voronezh
+Russia,Sakha (Yakutiya) Republic,Sakha
+Russia,Amur Oblast,Amur
+Russia,Saratov Oblast,Saratov
+Russia,Novgorod Oblast,Novgorod
+Russia,Ulyanovsk Oblast,Ulyanovsk
+Russia,Sverdlovsk Oblast,Sverdlovsk
+Russia,Kurgan Oblast,Kurgan
+Russia,Irkutsk Oblast,Irkutsk
+Russia,Penza Oblast,Penza
+Russia,Omsk Oblast,Omsk
+Russia,Astrakhan Oblast,Astrakhan´
+Russia,Volgograd Oblast,Volgograd
+Russia,Orel Oblast,Orel
+Russia,Ingushetia Republic,Ingush
+Russia,Karelia Republic,Karelia
+Russia,Magadan Oblast,Maga Buryatdan
+Russia,Khabarovsk Krai,Khabarovsk
+Russia,Tomsk Oblast,Tomsk
+Russia,Kaliningrad Oblast,Kaliningrad
+Russia,Buryatia Republic,Buryat
+Russia,Orenburg Oblast,Orenburg
+Russia,Pskov Oblast,Pskov
+Russia,Samara Oblast,Samara
+Russia,Primorsky Krai,Vilyuchinsk
+Russia,Krasnodar Krai,Krasnodar
+Russia,Vladimir Oblast,Vladimir
+Russia,Arkhangelsk Oblast,Arkhangelsk
+Russia,Tula Oblast,Tula
+Russia,Udmurt Republic,Udmurt 
+Russia,Vologda Oblast,Vologda
+Russia,Rostov Oblast,Rostov
+Russia,Novosibirsk Oblast,Novosibirsk 
+Russia,Sakhalin Oblast,Sakhalin
+Russia,Tver Oblast,Tver
+Russia,Kirov Oblast,Kirov
+Russia,Krasnoyarsk Krai,Krasnoyarsk
+Russia,Perm Krai,Perm
+Russia,Stavropol Krai,Stavropol
+Russia,Kalmykia Republic,Kalmyk
+Russia,Kemerovo Oblast,Kemerovo
+Russia,Dagestan Republic,Dagestan
+Russia,Kostroma Oblast,Kostroma
+Russia,Saint Petersburg,Leningrad
+Sweden,Vastra Gotaland,Västra Götaland
+Sweden,Gavleborg,Gävleborg
+Sweden,Varmland,Värmland
+Sweden,Vasternorrland,Västernorrland
+Sweden,Skane,Scania
+Sweden,Sormland,Sodermanland
+Ukraine,Volyn Oblast,Volyn
+Ukraine,Kherson Oblast,Herson
+Ukraine,Rivne Oblast,Rivne
+Ukraine,Donetsk Oblast,Donetsk
+Ukraine,Lviv Oblast,Lviv
+Ukraine,Vinnytsia Oblast,Vinnica
+Ukraine,Kiev Oblast,Kiev
+Ukraine,Zakarpattia Oblast,Transcarphatia
+Ukraine,Kirovohrad Oblast,Kirovograd
+Ukraine,Dnipropetrovsk Oblast,Dnipropetrovsk
+Ukraine,Cherkasy Oblast,Cherkask
+Ukraine,Crimea Republic*,Crimea
+Ukraine,Mykolaiv Oblast,Mykoyivsk
+Ukraine,Ivano-Frankivsk Oblast,Ivano-Frankivsk
+Ukraine,Zhytomyr Oblast,Zhitomir
+Ukraine,Odessa Oblast,Odesa
+Ukraine,Kharkiv Oblast,Harkov
+Ukraine,Sumy Oblast,Sumska
+Ukraine,Poltava Oblast,Poltava
+Ukraine,Zaporizhia Oblast,Zaporizhzhya
+Ukraine,Khmelnytskyi Oblast,Khmelnytskyi
+Ukraine,Luhansk Oblast,Lugansk
+Ukraine,Chernihiv Oblast,Chernigov
+Ukraine,Ternopil Oblast,Ternopil
