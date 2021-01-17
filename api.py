@@ -29,7 +29,7 @@ week_and_day_ago = (date.today() - timedelta(days=8)).strftime('%m-%d-%Y')
 JHU_GITHUB = f"https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/{yesterday}.csv"
 JHU_GITHUB_WEEK = f"https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/{week_ago}.csv"
 GCP_DATA = "https://storage.googleapis.com/covid19-open-data/v2/latest/main.csv"
-POPULATION_CSV = 'csv/world_population.csv'
+COUNTRY_DATA_CSV = 'csv/country_data.csv'
 PROVINCES_CSV = 'csv/provinces.csv'
 JHU_TO_GCP = 'csv/jhu_to_gcp.csv'
 GCP_ROW_PROVINCES = 'csv/gcp_row_provinces.csv'
@@ -56,7 +56,7 @@ RISK = {
 #TODO: Optimizar memoria solo leyendo las columnas que se utilicen con usecols
 df = pd.read_csv(JHU_GITHUB, index_col='Combined_Key')
 df_week = pd.read_csv(JHU_GITHUB_WEEK, index_col='Combined_Key', usecols=['Combined_Key', 'Confirmed'])
-df_population = pd.read_csv(POPULATION_CSV, index_col='Country')
+df_country_data = pd.read_csv(COUNTRY_DATA_CSV, index_col='Country')
 df_provinces = pd.read_csv(PROVINCES_CSV, index_col='Wolfram')
 df_dict = pd.read_csv(JHU_TO_GCP, index_col='JHU')
 df_gcp = pd.read_csv(GCP_DATA)
@@ -123,7 +123,7 @@ df_week = pd.concat([df_week, pd.DataFrame(week_ago_rows).set_index('Combined_Ke
 
 # Initial DF operations
 df['Population_Density'] = df['Population'] / df['Area']
-df['Country_Population'] = df.Country_Region.map(df_population.Population)
+df['Country_Population'] = df.Country_Region.map(df_country_data.Population)
 df.Population = df.Country_Population.where(np.isnan(df['Population']), df.Population)
 df['Country_Confirmed'] = df.Country_Region.map(lambda x: df[df['Country_Region'] == x]['Confirmed'].sum())
 df['Country_Active'] = df.Country_Region.map(lambda x: df[df['Country_Region'] == x]['Active'].sum())
@@ -239,10 +239,7 @@ def index():
     total_recovered = province_df['Recovered'].sum()
     new_cases = province_df['Confirmed_New_Cases'].sum()
     population_density = province_df['Population_Density'].mean()
-    # per_capita_active = total_active / population
-    # per_capita_confirmed = total_confirmed / population
-    # per_capita_deaths = total_deaths / population
-    # per_capita_recovered = total_recovered / population
+    restrictions = df_country_data.loc[country].get(f'Restrictions-{lang}', 'No Data')
     
     if population_density > 0:
         safety_index = province_df['Safety_Index_2'].mean()
@@ -263,18 +260,14 @@ def index():
         'place': lugar,
         'country': country,
         'province': province,
-        # 'population': population,
         'total_active': int(total_active),
         'total_confirmed': int(total_confirmed),
         'total_deaths': int(total_deaths),
         'total_recovered': int(total_recovered),
         'weekly_new_cases' : int(new_cases),
-        # 'per_capita_active': float(per_capita_active*100),
-        # 'per_capita_confirmed': float(per_capita_confirmed*100),
-        # 'per_capita_deaths': float(per_capita_deaths*100),
-        # 'per_capita_recovered': float(per_capita_recovered*100),
-        'safety_index': min(10, max(0, safety_index)),
+        'restrictions': restrictions,
         'warning_color': warning_color,
+        'safety_index': min(10, max(0, safety_index)),
         'risk': risk,
         'has_province_data': has_province_data
     }
