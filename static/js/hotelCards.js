@@ -27,7 +27,7 @@ async function getFlightCard() {
 
     const placeURL = encodeURI(`${BASE_URL}/api/v1/riesgo?lugar=${placeQuery}&lang=${lang}`);
     
-    padre = document.querySelector("#main > div > div > div > section > div.elementor-container.elementor-column-gap-default > div > div > div > div > div.elementor-element.elementor-element-4cf0e52.elementor-widget.elementor-widget-text-editor")
+    padre = document.getElementsByClassName('elementor-element elementor-element-4cf0e52 elementor-widget elementor-widget-text-editor')[0]
 
     res = await fetch(placeURL);
     htmlString = await res.text();
@@ -81,7 +81,7 @@ async function getHotelCard() {
 
     const placeURL = encodeURI(`${BASE_URL}/api/v1/riesgo?lugar=${placeQuery}&lang=${lang}`);
     
-    padre = document.querySelector("#main > div > div > div > section > div.elementor-container.elementor-column-gap-default > div > div > div > div > div.elementor-element.elementor-element-4cf0e52.elementor-widget.elementor-widget-text-editor")
+    padre =padre = document.getElementsByClassName('elementor-element elementor-element-4cf0e52 elementor-widget elementor-widget-text-editor')[0]
 
     res = await fetch(placeURL);
     htmlString = await res.text();
@@ -158,6 +158,7 @@ function customizeDOM(){
     hotelSearchParent.appendChild(newHotelSearchButton);
 
     // var travelPayoutLogos = document.getElementsByClassName('tp_powered_by');
+    // travelPayoutLogos.forEach((logo) => logo.remove());
     var travelPayoutsLogoFlights = document.querySelector(FLIGHTS_LOGO_QUERY_SELECTOR);
     travelPayoutsLogoFlights.remove();
     var travelPayoutsLogoHotels = document.querySelector(HOTELS_LOGO_QUERY_SELECTOR)
