@@ -27,9 +27,9 @@ async function getFlightCard() {
 
     const placeURL = encodeURI(`${BASE_URL}/api/v1/riesgo?lugar=${placeQuery}&lang=${lang}`);
     
-    padre = document.getElementsByClassName('elementor-element elementor-element-4cf0e52 elementor-widget elementor-widget-text-editor')[0]
+    padre = document.getElementsByClassName('elementor-element elementor-element-6be373b elementor-widget elementor-widget-text-editor')[0]
     if(!padre) {
-        padre = document.getElementsByClassName('elementor-element elementor-element-506108c elementor-widget elementor-widget-text-editor')[0]
+        padre = document.getElementsByClassName('elementor-element elementor-widget elementor-widget-text-editor')[0]
     }
 
     res = await fetch(placeURL);
@@ -84,9 +84,9 @@ async function getHotelCard() {
 
     const placeURL = encodeURI(`${BASE_URL}/api/v1/riesgo?lugar=${placeQuery}&lang=${lang}`);
     
-    padre = document.getElementsByClassName('elementor-element elementor-element-4cf0e52 elementor-widget elementor-widget-text-editor')[0]
+    padre = document.getElementsByClassName('elementor-element elementor-element-6be373b elementor-widget elementor-widget-text-editor')[0]
     if(!padre) {
-        padre = document.getElementsByClassName('elementor-element elementor-element-506108c elementor-widget elementor-widget-text-editor')[0]
+        padre = document.getElementsByClassName('elementor-element elementor-widget elementor-widget-text-editor')[0]
     }
 
     res = await fetch(placeURL);

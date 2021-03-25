@@ -3,6 +3,7 @@ import requests
 import re
 import os
 import unicodedata
+import json
 from datetime import date, timedelta
 import pandas as pd
 import numpy as np
@@ -11,6 +12,7 @@ from settings import app, db
 from db_models import Place
 from datetime import datetime
 
+RAPID_API_SECRET = "e3f34eb0-5c4e-11eb-a337-d9a3c165d963" # Change to env variable
 WOLFRAM_APPID = "7GW5RH-PWP987529Q"
 WOLFRAM_BASEURL = "https://api.wolframalpha.com/v1/result"
 QUERY_COUNTRY = "In what country is "
@@ -196,6 +198,100 @@ def index():
     test_query = 'true' == request.args.get('test')
     lang = request.args.get('lang', 'en')
     
+    data, safety_index = get_data(lugar, lang)
+    
+    if np.isnan(safety_index):
+        print(f"NAN ERROR: Place: {lugar}")
+        return render_template('error.html')
+
+    if test_query:
+        return render_template('safety_test.html', **data)
+    else:
+        template_name = f'safety_{lang}.html'
+        return render_template(template_name, **data)
+
+
+@app.route('/rapidapi/v1/safeindex')
+def rapid_api_index():
+    try:
+        rapid_api_secret = request.headers.get('X-RapidAPI-Proxy-Secret')
+        if(rapid_api_secret != RAPID_API_SECRET):
+            return {'success': False}, 401
+        else:
+            lugar = strip_accents(request.args.get('place', ''))
+            lang = request.args.get('lang', 'en')
+            response_type = request.args.get('response_type', 'json')
+            
+            data, safety_index = get_data(lugar, lang)
+            
+            if response_type == 'json':
+                if np.isnan(safety_index):
+                    print(f"NAN ERROR: Place: {lugar}")
+                    return json.dumps({'success': False, 'message': f"Could not get data for - Place: {lugar}" })
+                else:
+                    return json.dumps(data)
+            elif response_type == 'html':
+                if np.isnan(safety_index):
+                    print(f"NAN ERROR: Place: {lugar}")
+                    return render_template('error.html')
+                else:
+                    template_name = f'safety_{lang}.html'
+                    return render_template(template_name, **data)
+    except Exception:
+        return {'success': False}, 500
+
+
+
+def lookup_data(lugar):
+    
+    res = requests.get(WOLFRAM_BASEURL, params={'appid': WOLFRAM_APPID, 'i': f"{QUERY_PROVINCE}{lugar}"})
+
+    if (res.status_code == 200):
+        places_array = res.text.split(",")
+        country = places_array[-1].lstrip(' ')
+        province = places_array[-2].lstrip(' ')
+            
+        res = requests.get(WOLFRAM_BASEURL, params={'appid': WOLFRAM_APPID, 'i': f"{QUERY_POPULATION}{province},{country}"})
+        if (res.status_code == 200):
+            try:
+                population = extract_number(res.text)
+            except Exception as e:
+                print(e)
+                return {'success': False, 'message': f"Error2: LUGAR={lugar} | QUERY = {QUERY_POPULATION}{province},{country}"}
+        else:
+            return {'success': False, 'message': f"Error3: LUGAR={lugar} | QUERY = {QUERY_POPULATION}{province},{country}"}
+            
+        if country == 'United States':
+            country = 'US'
+        
+        # Insert results to db
+        new_place = Place(query=lugar, country=country, province=province, hits='1', population=population)  # Agregar population si se descomenta codigo
+        session.add(new_place)
+        session.commit()
+            
+        return {'success': True, 'country': country, 'province': province, 'population': population} # Agregar population si se descomenta codigo
+        #return f"{lugar} está en la provincia de {province} en el país {country} con población de provincia de {population}"
+        # else:
+        #     return {'success': False, 'message': f"Error: LUGAR={lugar} | QUERY = {QUERY_POPULATION}{province},{country}"}
+            
+    else:
+        return {'success': False, 'message': f"Error: LUGAR={lugar} | QUERY = {QUERY_PROVINCE}{lugar}"}
+
+# HELPER FUNCTIONS
+
+
+def extract_number(string):
+    regex_number = re.compile(r'[\d\.]+')
+    has_million = string.find("million") != -1
+    number = float(regex_number.search(string).group())
+    if has_million:
+        number *= 1000000
+    return number
+
+def strip_accents(s):
+    return ''.join((c for c in unicodedata.normalize('NFD', s) if unicodedata.category(c) != 'Mn'))
+
+def get_data(lugar, lang):
     lugar_query = session.query(Place).filter(Place.query == lugar)
     
     if lugar_query.count() == 0:
@@ -272,65 +368,7 @@ def index():
         'has_province_data': has_province_data
     }
     
-    if np.isnan(safety_index):
-        print(f"NAN ERROR: Place: {lugar}, Country: {country}")
-        return render_template('error.html')
-
-    if test_query:
-        return render_template('safety_test.html', **data)
-    else:
-        template_name = f'safety_{lang}.html'
-        return render_template(template_name, **data)
-
-
-def lookup_data(lugar):
-    
-    res = requests.get(WOLFRAM_BASEURL, params={'appid': WOLFRAM_APPID, 'i': f"{QUERY_PROVINCE}{lugar}"})
-
-    if (res.status_code == 200):
-        places_array = res.text.split(",")
-        country = places_array[-1].lstrip(' ')
-        province = places_array[-2].lstrip(' ')
-            
-        res = requests.get(WOLFRAM_BASEURL, params={'appid': WOLFRAM_APPID, 'i': f"{QUERY_POPULATION}{province},{country}"})
-        if (res.status_code == 200):
-            try:
-                population = extract_number(res.text)
-            except Exception as e:
-                print(e)
-                return {'success': False, 'message': f"Error2: LUGAR={lugar} | QUERY = {QUERY_POPULATION}{province},{country}"}
-        else:
-            return {'success': False, 'message': f"Error3: LUGAR={lugar} | QUERY = {QUERY_POPULATION}{province},{country}"}
-            
-        if country == 'United States':
-            country = 'US'
-        
-        # Insert results to db
-        new_place = Place(query=lugar, country=country, province=province, hits='1', population=population)  # Agregar population si se descomenta codigo
-        session.add(new_place)
-        session.commit()
-            
-        return {'success': True, 'country': country, 'province': province, 'population': population} # Agregar population si se descomenta codigo
-        #return f"{lugar} está en la provincia de {province} en el país {country} con población de provincia de {population}"
-        # else:
-        #     return {'success': False, 'message': f"Error: LUGAR={lugar} | QUERY = {QUERY_POPULATION}{province},{country}"}
-            
-    else:
-        return {'success': False, 'message': f"Error: LUGAR={lugar} | QUERY = {QUERY_PROVINCE}{lugar}"}
-
-# HELPER FUNCTIONS
-
-
-def extract_number(string):
-    regex_number = re.compile(r'[\d\.]+')
-    has_million = string.find("million") != -1
-    number = float(regex_number.search(string).group())
-    if has_million:
-        number *= 1000000
-    return number
-
-def strip_accents(s):
-    return ''.join((c for c in unicodedata.normalize('NFD', s) if unicodedata.category(c) != 'Mn'))
+    return data, safety_index
 
 if __name__ == '__main__':
     app.run(debug=True)
